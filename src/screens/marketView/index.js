@@ -1,10 +1,11 @@
 import { View, Text } from 'react-native'
 import React from 'react'
+import { styles } from './styles'
 
 const MarketView = () => {
   return (
-    <View>
-      <Text>MarketView</Text>
+    <View style={styles.androidSafeView}>
+      <Text style={styles.headerText}>Stocks</Text>
     </View>
   )
 }
