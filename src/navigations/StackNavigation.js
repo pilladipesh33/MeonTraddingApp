@@ -10,6 +10,7 @@ import BuySellScreen from '../screens/buy&sell';
 import placeOrderScreen from '../screens/buy&sell/placeOrderScreen';
 import Login from '../screens/login';
 import Profile from '../screens/profile';
+import DrawerNavigation from './DrawerNavigation';
 
 
 const Stack = createStackNavigator();
@@ -17,7 +18,7 @@ const Stack = createStackNavigator();
 function StackNavigation() {
   return (
       <Stack.Navigator
-      initialRouteName='BottomTab'
+      initialRouteName='Drawer'
         screenOptions={{
           headerShown: false,
         }}>
@@ -29,6 +30,7 @@ function StackNavigation() {
         <Stack.Screen name='PlaceOrder' component={placeOrderScreen} />
         <Stack.Screen name='Profile' component={Profile} />
         <Stack.Screen name='Login' component={Login} />
+        <Stack.Screen name='Drawer' component={DrawerNavigation} />
         {/* <Stack.Screen name='Stack' component={StackNavigation} /> */}
       </Stack.Navigator>
   );

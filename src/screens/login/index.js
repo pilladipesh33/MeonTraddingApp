@@ -1,5 +1,5 @@
 import {Text, View} from 'react-native';
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import {styles} from './styles';
 import {TextInput, Button} from 'react-native-paper';
 import {useDispatch, useSelector} from 'react-redux';
@@ -10,22 +10,26 @@ const Login = ({navigation}) => {
   const [userID, setUserID] = useState('');
   const [password, setPassword] = useState('');
   const dispatch = useDispatch();
+  const [payload, setPayload] = useState("");
   const {userData} = useSelector((state) => state.login);
+
+  useEffect(() => {
+    if(payload){
+      dispatch(loginUser(payload, navigation))
+    }
+  },[payload])
 
   const handleLogin = () => {
     if (userID && password) {
-      dispatch(
-        loginUser({
-          userID: userID,
-          password: password,
-        }),
-      ),
-      navigation.navigate("OTP")
+      setPayload({
+        userID: userID,
+        password: password
+      })
+      navigation.navigate('OTP')
     }else{
         alert('Enter details');
     }
   };
-  console.log('userData', userData)
   return (
     <View style={styles.AndroidSafeAreaView}>
       <Text style={styles.headingText}>Welcome to Meon Tradding</Text>

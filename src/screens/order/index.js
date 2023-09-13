@@ -12,9 +12,9 @@ const Order = () => {
   },[]);
   return (
     <View style={styles.androidSafeArea}>
-      <View style={styles.container}>
+      {/* <View style={styles.container}>
       <Text style={styles.headerText}>Orders</Text>
-      </View>
+      </View> */}
       <OrderTopBarNavigation/>
     </View>
   )

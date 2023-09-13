@@ -27,7 +27,7 @@ const WatchlistContainer = ({navigation}) => {
       data={groupList}
       keyExtractor={item => item?.groupName}
       renderItem={({item}) => (
-        <View style={{paddingTop: 10}}>
+        <View style={{}}>
           <TouchableOpacity
             style={styles.container}
             onPress={() => navigation.navigate('GroupDetail', {key: item})}>

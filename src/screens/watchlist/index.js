@@ -9,9 +9,9 @@ import {
 } from 'react-native';
 import React, {useState} from 'react';
 import Feather from 'react-native-vector-icons/Feather';
-import { Colors } from '../../constants/color';
+import {Colors} from '../../constants/color';
 import DropDownArrow from '../../components/DropDownArrow';
-import { styles } from './styles';
+import {styles} from './styles';
 import WatchlistDataSection from './WatchlistDataSection';
 
 const Watchlist = ({navigation}) => {
@@ -21,10 +21,11 @@ const Watchlist = ({navigation}) => {
   };
   return (
     <View style={styles.androidSafeArea}>
-      {isBannerVisible && (
-        <DropDownArrow/>
-      )}
+      {/* {isBannerVisible && <DropDownArrow />}
       <View style={styles.container}>
+        <TouchableOpacity onPress={() => navigation.navigate('MyDrawer')}>
+          <Feather name="menu" color={Colors.MATT_BLACK} size={30} />
+        </TouchableOpacity>
         <Text style={styles.headingText}>Watchlist</Text>
         <TouchableOpacity onPress={toggelBanner}>
           {isBannerVisible ? (
@@ -37,13 +38,12 @@ const Watchlist = ({navigation}) => {
             />
           )}
         </TouchableOpacity>
-      </View>
+      </View> */}
       {/* <WishlistTopBarNavigation navigation={navigation}/> */}
       {/* <StockDataSections navigation={navigation} /> */}
-      <WatchlistDataSection navigation={navigation}/>
+      <WatchlistDataSection navigation={navigation} />
     </View>
   );
 };
 
 export default Watchlist;
-

@@ -54,7 +54,7 @@ const Search = ({navigation}) => {
   return (
     <View style={styles.androidSafeArea}>
       <View style={styles.searchBox}>
-        <TouchableOpacity onPress={() => navigation.navigate('BottomTab')}>
+        <TouchableOpacity onPress={() => navigation.navigate('Drawer')}>
           <AntDesign
             name="arrowleft"
             size={25}

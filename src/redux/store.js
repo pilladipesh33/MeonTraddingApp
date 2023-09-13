@@ -15,6 +15,9 @@ import socketConnectionSlice from "./store/socketConnectionSlice";
 import searchStockDataSlice from "./store/searchStockDataSlice";
 import getGroupDetailsSlice from "./store/getGroupDetailsSlice";
 import placeOrderSlice from "./store/placeOrderSlice";
+import getExchangeMessageSlice from "./store/getExchangeMessageSlice";
+import getAlertListSlice from "./store/getAlertListSlice";
+;
 
 const store = configureStore({
     reducer: {
@@ -33,7 +36,9 @@ const store = configureStore({
         unSubscribedInstruments: unsubscriptionsInstrumentSlice,
         searchStockData: searchStockDataSlice,
         getGroupDetails: getGroupDetailsSlice,
-        placeOrder: placeOrderSlice
+        placeOrder: placeOrderSlice,
+        getExchangeMessage: getExchangeMessageSlice,
+        getAlertList: getAlertListSlice,
     }
 });
 export default store;

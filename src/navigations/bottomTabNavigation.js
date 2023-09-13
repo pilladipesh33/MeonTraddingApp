@@ -100,7 +100,7 @@ function BottomTabNavigation() {
           ),
         }}
       />
-      <Tab.Screen
+      {/* <Tab.Screen
         name="Portfolio"
         component={Portfolio}
         options={{
@@ -123,7 +123,7 @@ function BottomTabNavigation() {
             </View>
           ),
         }}
-      />
+      /> */}
       <Tab.Screen
         name="Market"
         component={Market}

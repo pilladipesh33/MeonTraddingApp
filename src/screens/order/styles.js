@@ -21,8 +21,8 @@ export const styles = StyleSheet.create({
     },
     androidSafeArea: {
         flex : 1,
-        paddingTop: Platform.OS === "android" ? StatusBar.currentHeight : 0,
-        backgroundColor: Colors.TRANSPARENT
+        // paddingTop: Platform.OS === "android" ? StatusBar.currentHeight : 0,
+        // backgroundColor: Colors.TRANSPARENT
       },
       container: {
         paddingLeft: 10,

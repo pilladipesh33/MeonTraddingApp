@@ -20,7 +20,7 @@ export const userProfileData = createAsyncThunk(
                 }
             );
             dispatch(setShowAlertForUserProfile(true));
-            console.log('response.data', response.data)
+            console.log('response.data1', response.data)
             return response?.data
         }catch(error){
             return rejectWithValue(serializeError(error))

@@ -13,6 +13,7 @@ import { Colors } from '../../constants/color';
 
 const Profile = ({navigation}) => {
   const [userProfile, setUserProfile] = useState('');
+
   const handleLogout = async () => {
     try {
       await AsyncStorage.removeItem('TOKEN');
@@ -35,6 +36,8 @@ const Profile = ({navigation}) => {
     };
     const response = await fetch(apiUrl, requestOption);
     const data = await response?.json();
+    AsyncStorage.setItem('EMAIL', data?.result?.EmailId);
+    AsyncStorage.setItem('PHONE', data?.result?.MobileNo);
     if (data?.type == 'success') {
       setUserProfile(data?.result);
     }
@@ -44,16 +47,17 @@ const Profile = ({navigation}) => {
     fetchUserDetails()
   }, []);
 
+  console.log('userProfile', userProfile)
+
   return (
     <ScrollView style={{backgroundColor: Colors.WHITE}}>
       <View style={styles.androidSafeArea}>
         <View style={styles.container}>
           <View style={styles.headingContainer}>
-            <Text style={styles.headingText}>Account</Text>
             {/* <Feather name={'chevron-down'} size={40} color={Colors.MATT_BLACK} /> */}
           </View>
           <View style={styles.headingContainer}>
-            <Text style={styles.subHeadingText}>{userProfile?.ClientName}</Text>
+            <Text style={styles.headingText}>{userProfile?.ClientName}</Text>
             <View style={{paddingRight: 10}}>
               <Feather name={'bell'} size={20} color={Colors.MATT_BLACK} />
             </View>
@@ -70,13 +74,13 @@ const Profile = ({navigation}) => {
             <View style={styles.columnContainer2}>
               <Text style={styles.detailText2}>{userProfile?.EmailId}</Text>
               <Text style={styles.detailText2}>
-                {userProfile?.MobileNo}
+                {(userProfile?.MobileNo)}
               </Text>
               <Text style={styles.detailText2}>
-                {userProfile?.PAN}
+                {(userProfile?.PAN)}
               </Text>
               <Text style={styles.detailText2}>
-                {userProfile?.DematAccountNumber}
+                {(userProfile?.DematAccountNumber)}
               </Text>
             </View>
           </View>

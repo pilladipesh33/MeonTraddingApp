@@ -35,7 +35,7 @@ const WatchlistDataSection = ({navigation}) => {
       <View style={styles.bodyContainer}>
         <View style={styles.bodyContentContainer}>
           <SearchBox navigation={navigation}/>
-          <TouchableOpacity
+          {/* <TouchableOpacity
             onPress={showModal}
             style={{
               alignItems: 'flex-end',
@@ -52,9 +52,9 @@ const WatchlistDataSection = ({navigation}) => {
               Add
             </Text>
             <Feather name="plus" size={20} color={Colors.GREEN} />
-          </TouchableOpacity>
+          </TouchableOpacity> */}
           <WatchlistContainer navigation={navigation} />
-          <Modal
+          {/* <Modal
             visible={visible}
             onDismiss={hideModal}
             contentContainerStyle={containerStyle} 
@@ -76,7 +76,7 @@ const WatchlistDataSection = ({navigation}) => {
                 <Text style={styles.buttonText}>Submit</Text>
               </TouchableOpacity>
             </View>
-          </Modal>
+          </Modal> */}
         </View>
       </View>
     </View>
@@ -89,7 +89,7 @@ const styles = StyleSheet.create({
   bodyContainer: {
     backgroundColor: Colors.WHITE,
     height: '100%',
-    top: 50,
+    top: 20,
     borderRadius: 20,
   },
   bodyContentContainer: {paddingTop: '15%', paddingRight: 10},

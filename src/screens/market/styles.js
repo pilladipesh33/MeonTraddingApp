@@ -4,8 +4,8 @@ import { Colors } from '../../constants/color';
 export const styles = StyleSheet.create({
   androidSafeView: {
     flex: 1,
-    paddingTop: Platform.OS === 'android' ? StatusBar.currentHeight : 0,
-    backgroundColor: Colors.WHITE,
+    // paddingTop: Platform.OS === 'android' ? StatusBar.currentHeight : 0,
+    backgroundColor: Colors.TRANSPARENT,
     paddingLeft: 10,
     paddingRight: 10
   },

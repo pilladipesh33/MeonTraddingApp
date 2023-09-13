@@ -5,23 +5,32 @@ import {TextInput, Button} from 'react-native-paper';
 import {validateOTPUser} from '../../redux/store/validateOTPSlice';
 import { Colors } from '../../constants/color';
 
-const OTPValidation = ({navigation}) => {
+const OTPValidation = ({navigation, route}) => {
   const {userData} = useSelector(state => state.login);
+  const {validateOTPData} = useSelector(state => state.validateOTP);
+  const [payload, setPayload] = useState("");
   const [pin, setPin] = useState('');
   const dispatch = useDispatch();
+
+  React.useEffect(() => {
+    if(payload){
+      dispatch(validateOTPUser(payload))
+    }
+  },[payload])
+
   const handleVerifyOtp = () => {
     if (pin) {
-      dispatch(
-        validateOTPUser({
-          userID: userData?.result?.userID,
+      setPayload({
+          userID: `${40151}`,
           pin: pin,
           source: 'EnterpriseWeb',
-        }),
-      );
+        })
+    if(validateOTPData?.type == 'success'){
+      navigation.navigate('Drawer');
     }
-    if(userData?.type)
-    navigation.navigate('BottomTab');
-  };
+  }
+}
+console.log('validateOTPData', validateOTPData.type)
   return (
     <View>
       <Text

@@ -36,7 +36,7 @@ const GroupDetails = ({route, navigation}) => {
   const handleDeleteButton = () => {
     dispatch(deleteGroupItem(data?.groupName));
     if (deletedGroup?.type == 'success') {
-      navigation.navigate('BottomTab');
+      navigation.navigate('Drawer');
     }
   };
   //GROUP DATA API INTEGRATI
@@ -56,6 +56,8 @@ const GroupDetails = ({route, navigation}) => {
     state => state.getInstrumentDetailsById,
   );
 
+  // console.log('instruments', instruments)
+
   useEffect(() => {
     if (instruments !== undefined) {
       dispatch(getInstrumentsDetailsById({instruments, source: 'WEB'}));
@@ -66,7 +68,7 @@ const GroupDetails = ({route, navigation}) => {
   }, [instruments]);
 
   const handleBackButton = () => {
-    navigation.navigate('BottomTab');
+    navigation.navigate('Drawer');
     setStockData('');
   };
   //SOCKET CONNECTIONS
@@ -97,7 +99,7 @@ const GroupDetails = ({route, navigation}) => {
 
   // console.log('previousValue', previousValue);
   // console.log('currentValue', currentValue)
-//   console.log('socketData', socketData.ExchangeInstrumentID);
+  // console.log('socketData', socketData.ExchangeInstrumentID);
 
   return (
     <View style={styles.androidSafeArea}>
@@ -134,7 +136,7 @@ const GroupDetails = ({route, navigation}) => {
             <View>
               <TouchableOpacity
                 style={styles.dataContainer}
-                onPress={() => navigation.navigate('BuyAndSell', {key: item})}>
+                onPress={() => navigation.navigate('BuySell', {key: item})}>
                 <View>
                   <View style={styles.columnContainer}>
                     <Text style={styles.textContainer}>

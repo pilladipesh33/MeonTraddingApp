@@ -6,23 +6,23 @@ import { Button, Card } from 'react-native-paper';
 
 const Market = () => {
   const [newsData, setNewsData] = useState([]);
-  useEffect(() => {
-    const fetchNews = () => {
-      const response = axios
-        .get(
-          'https://eodhistoricaldata.com/api/news?api_token=demo&s=AAPL.US&offset=0&limit=10',
-        )
-        .then(response => {
-          setNewsData(response);
-        });
-    };
-    return fetchNews();
-  }, []);
-  console.log('newsData', newsData);
+  // useEffect(() => {
+  //   const fetchNews = () => {
+  //     const response = axios
+  //       .get(
+  //         'https://eodhistoricaldata.com/api/news?api_token=demo&s=AAPL.US&offset=0&limit=10',
+  //       )
+  //       .then(response => {
+  //         setNewsData(response);
+  //       });
+  //   };
+  //   return fetchNews();
+  // }, []);
+  
   return (
     
     <View style={styles.androidSafeView}>
-      <Text style={styles.headerText}>Market</Text>
+      {/* <Text style={styles.headerText}>Market</Text> */}
       <ScrollView>
       <View style={styles.cardContainer}>
         <Text style={styles.cardHeadingText}>iPhone 15 launch: Release date, price and new features</Text>

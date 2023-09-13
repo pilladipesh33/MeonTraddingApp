@@ -33,7 +33,7 @@ const BuySellScreen = ({navigation, route}) => {
     {exchangeInstrumentID, exchangeSegment},
   ]);
 
-  //Socket Connnection
+  //Socket Connnec
   const dispatch = useDispatch();
   const {socketData, socketDataStatus, joined} = useSelector(
     state => state.socketConnection,
@@ -58,12 +58,12 @@ const BuySellScreen = ({navigation, route}) => {
     };
   }, [joined, instruments]);
 
-  console.log('socketData', socketData)
+  console.log('socketData1', socketData?.ExchangeSegment)
 
   return (
     <View style={styles.androidSafeArea}>
       <View style={styles.headerContainer}>
-        <TouchableOpacity onPress={() => navigation.navigate('BottomTab')}>
+        <TouchableOpacity onPress={() => navigation.navigate('Drawer')}>
           <Feather name="chevron-left" size={25} color={Colors.BLACK} />
         </TouchableOpacity>
         <View style={{flexDirection: 'column', alignItems: 'flex-start'}}>

@@ -7,7 +7,6 @@ export const validateOTPUser = createAsyncThunk(
     'validateOTP/fetch',
     async(data, {rejectWithValue, serializeError, dispatch}) => {
         let payload = JSON.stringify(data);
-        console.log('pau', payload)
         try{
             const response = await axios.post(
                 'https://itrade.investmentwallet.in:10121/enterprise/auth/validatepin',
@@ -16,6 +15,7 @@ export const validateOTPUser = createAsyncThunk(
             dispatch(setShowAlert(true));
             if(response?.data?.type == 'success'){
                 AsyncStorage.setItem('TOKEN', response?.data?.result?.token)
+                console.log('response.data', response.data)
             }
             console.log('response.data', response.data)
             return response?.data;
