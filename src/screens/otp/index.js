@@ -3,34 +3,38 @@ import React, {useState} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 import {TextInput, Button} from 'react-native-paper';
 import {validateOTPUser} from '../../redux/store/validateOTPSlice';
-import { Colors } from '../../constants/color';
+import {Colors} from '../../constants/color';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const OTPValidation = ({navigation, route}) => {
   const {userData} = useSelector(state => state.login);
   const {validateOTPData} = useSelector(state => state.validateOTP);
-  const [payload, setPayload] = useState("");
+  const [payload, setPayload] = useState('');
   const [pin, setPin] = useState('');
   const dispatch = useDispatch();
 
   React.useEffect(() => {
-    if(payload){
-      dispatch(validateOTPUser(payload))
+    if (payload) {
+      dispatch(validateOTPUser(payload));
     }
-  },[payload])
+  }, [payload]);
+  console.log('TOKEN', AsyncStorage.getItem('TOKEN'));
+  React.useEffect(() => {
+    if (validateOTPData?.type == 'success') {
+      // navigation.navigate('Profile')
+    }
+  }, [validateOTPData]);
 
   const handleVerifyOtp = () => {
     if (pin) {
       setPayload({
-          userID: `${40151}`,
-          pin: pin,
-          source: 'EnterpriseWeb',
-        })
-    if(validateOTPData?.type == 'success'){
-      navigation.navigate('Drawer');
+        userID: `${40151}`,
+        pin: pin,
+        source: 'EnterpriseWeb',
+      });
     }
-  }
-}
-console.log('validateOTPData', validateOTPData.type)
+    console.log('validateOTPData', validateOTPData.type);
+  };
   return (
     <View>
       <Text
@@ -54,6 +58,7 @@ console.log('validateOTPData', validateOTPData.type)
           value={pin}
           onChangeText={text => setPin(text)}
           mode="outlined"
+          ke
         />
         <Button onPress={handleVerifyOtp}>
           <Text>Submit</Text>

@@ -18,47 +18,64 @@ import Login from '../screens/login';
 import OTPValidation from '../screens/otp';
 import SignUp from '../screens/signUp';
 import BuySellScreen from '../screens/buy&sell';
+import {selectIsLoggedIn} from '../redux/store/validateOTPSlice';
+import Portfolio from '../screens/portfolio';
+import {Colors} from '../constants/color';
 
 const Stack = createStackNavigator();
 
 export const Routes = () => {
-  const [accessToken, setAccessToken] = useState('');
+  const [storageToken, setStorageToken] = useState('');
   const dispatch = useDispatch();
   //const {validateOTPData} = useSelector((state) => state.validateOTP);
   useEffect(() => {
-    async function getAccessToken() {
-      const token = await AsyncStorage.getItem('TOKEN');
-      setAccessToken(token);
-      console.log('tok', token);
-    }
+    getFunction();
     dispatch(connectToSocket());
-    return getAccessToken();
   }, []);
-
+  const getFunction = async () => {
+    const token = await AsyncStorage.getItem('TOKEN');
+    setStorageToken(token);
+  };
+  const {accessToken, validateOTPData} = useSelector(
+    state => state.validateOTP,
+  );
   console.log('accessToken', accessToken);
+  console.log('validateOTPData', validateOTPData);
+
   return (
     <View style={{flex: 1}}>
       <NavigationContainer>
-        <Stack.Navigator screenOptions={{
-          headerShown: false
-        }}>
-          {accessToken ? (
+        <Stack.Navigator
+          screenOptions={{
+            headerShown: false,
+          }}>
+          {accessToken || storageToken ? (
             <>
-            <Stack.Screen name="Drawer" component={DrawerNavigation} />
-            <Stack.Screen name="BottomTab" component={BottomTabNavigation} />
-            <Stack.Screen name="CancelScreen" component={CancelScreen} />
-            <Stack.Screen name="Search" component={Search} />
-            <Stack.Screen name="GroupDetail" component={GroupDetails} />
-            <Stack.Screen name="BuySell" component={BuySellScreen} />
-            <Stack.Screen name="PlaceOrder" component={PlaceOrderScreen} />
-            <Stack.Screen name="Profile" component={Profile} />
-          </>
+              <Stack.Screen name="Drawer" component={DrawerNavigation} />
+              <Stack.Screen name="BottomTab" component={BottomTabNavigation} />
+              <Stack.Screen name="CancelScreen" component={CancelScreen} />
+              <Stack.Screen name="Search" component={Search} />
+              <Stack.Screen name="GroupDetail" component={GroupDetails} />
+              <Stack.Screen name="BuySell" component={BuySellScreen} />
+              <Stack.Screen name="PlaceOrder" component={PlaceOrderScreen} />
+              <Stack.Screen name="Profile" component={Profile} />
+              <Stack.Screen
+                name="Portfolio"
+                component={Portfolio}
+                options={{
+                  headerShown: true,
+                  headerStyle: {
+                    backgroundColor: Colors.TRANSPARENT
+                  }
+                }}
+              />
+            </>
           ) : (
             <>
-            <Stack.Screen name="Login" component={Login} />
-            <Stack.Screen name="OTP" component={OTPValidation} />
-            <Stack.Screen name="SignUp" component={SignUp} />
-          </>
+              <Stack.Screen name="Login" component={Login} />
+              <Stack.Screen name="OTP" component={OTPValidation} />
+              <Stack.Screen name="SignUp" component={SignUp} />
+            </>
           )}
         </Stack.Navigator>
       </NavigationContainer>

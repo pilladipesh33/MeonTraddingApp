@@ -11,6 +11,7 @@ import placeOrderScreen from '../screens/buy&sell/placeOrderScreen';
 import Login from '../screens/login';
 import Profile from '../screens/profile';
 import DrawerNavigation from './DrawerNavigation';
+import Portfolio from '../screens/portfolio';
 
 
 const Stack = createStackNavigator();
@@ -31,6 +32,8 @@ function StackNavigation() {
         <Stack.Screen name='Profile' component={Profile} />
         <Stack.Screen name='Login' component={Login} />
         <Stack.Screen name='Drawer' component={DrawerNavigation} />
+        <Stack.Screen name='Portfolio' component={Portfolio} />
+
         {/* <Stack.Screen name='Stack' component={StackNavigation} /> */}
       </Stack.Navigator>
   );

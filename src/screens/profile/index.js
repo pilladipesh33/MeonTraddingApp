@@ -1,23 +1,23 @@
-import {
-  View,
-  Text,
-  TouchableOpacity,
-  ScrollView,
-} from 'react-native';
+import {View, Text, TouchableOpacity, ScrollView} from 'react-native';
 import React, {useEffect, useState} from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import Feather from 'react-native-vector-icons/Feather';
-import { styles } from './styles';
-import { Colors } from '../../constants/color';
+import {styles} from './styles';
+import {Colors} from '../../constants/color';
+import {useDispatch, useSelector} from 'react-redux';
+import {setAccessToken} from '../../redux/store/validateOTPSlice';
 
 const Profile = ({navigation}) => {
   const [userProfile, setUserProfile] = useState('');
+  const dispatch = useDispatch();
+  const {accessToken} = useSelector(state => state.validateOTP)
 
   const handleLogout = async () => {
     try {
       await AsyncStorage.removeItem('TOKEN');
-      navigation.navigate('Login');
+      dispatch(setAccessToken(null));
+      console.log('token', accessToken)
     } catch (error) {
       console.error('Error logging out:', error);
     }
@@ -44,10 +44,10 @@ const Profile = ({navigation}) => {
   };
 
   useEffect(() => {
-    fetchUserDetails()
+    fetchUserDetails();
   }, []);
 
-  console.log('userProfile', userProfile)
+  console.log('userProfile', userProfile);
 
   return (
     <ScrollView style={{backgroundColor: Colors.WHITE}}>
@@ -73,14 +73,10 @@ const Profile = ({navigation}) => {
             </View>
             <View style={styles.columnContainer2}>
               <Text style={styles.detailText2}>{userProfile?.EmailId}</Text>
+              <Text style={styles.detailText2}>{userProfile?.MobileNo}</Text>
+              <Text style={styles.detailText2}>{userProfile?.PAN}</Text>
               <Text style={styles.detailText2}>
-                {(userProfile?.MobileNo)}
-              </Text>
-              <Text style={styles.detailText2}>
-                {(userProfile?.PAN)}
-              </Text>
-              <Text style={styles.detailText2}>
-                {(userProfile?.DematAccountNumber)}
+                {userProfile?.DematAccountNumber}
               </Text>
             </View>
           </View>
@@ -112,12 +108,30 @@ const Profile = ({navigation}) => {
           </View>
         </View>
         <View style={styles.contentContainer}>
-          <TouchableOpacity onPress={() => navigation.navigate('Funds')} style={styles.item}>
-            <MaterialIcons name='account-balance-wallet' size={24} color={Colors.GREY}/>
+        <TouchableOpacity onPress={() => navigation.navigate('Portfolio')} style={styles.item}>
+            <Feather
+              name="briefcase"
+              size={24}
+              color={Colors.GREY}
+            />
+            <Text style={styles.header}>Portfolio</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            onPress={() => navigation.navigate('Funds')}
+            style={styles.item}>
+            <MaterialIcons
+              name="account-balance-wallet"
+              size={24}
+              color={Colors.GREY}
+            />
             <Text style={styles.header}>Funds</Text>
           </TouchableOpacity>
           <TouchableOpacity onPress={() => handleLogout()} style={styles.item}>
-            <MaterialIcons name='account-balance-wallet' size={24} color={Colors.GREY}/>
+            <MaterialIcons
+              name="logout"
+              size={24}
+              color={Colors.GREY}
+            />
             <Text style={styles.header}>Logout</Text>
           </TouchableOpacity>
         </View>

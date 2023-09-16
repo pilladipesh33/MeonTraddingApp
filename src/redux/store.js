@@ -17,6 +17,7 @@ import getGroupDetailsSlice from "./store/getGroupDetailsSlice";
 import placeOrderSlice from "./store/placeOrderSlice";
 import getExchangeMessageSlice from "./store/getExchangeMessageSlice";
 import getAlertListSlice from "./store/getAlertListSlice";
+import holdingSlice from "./store/holdingSlice";
 ;
 
 const store = configureStore({
@@ -39,6 +40,7 @@ const store = configureStore({
         placeOrder: placeOrderSlice,
         getExchangeMessage: getExchangeMessageSlice,
         getAlertList: getAlertListSlice,
+        holding: holdingSlice,
     }
 });
 export default store;

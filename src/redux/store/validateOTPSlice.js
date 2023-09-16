@@ -15,9 +15,9 @@ export const validateOTPUser = createAsyncThunk(
             dispatch(setShowAlert(true));
             if(response?.data?.type == 'success'){
                 AsyncStorage.setItem('TOKEN', response?.data?.result?.token)
-                console.log('response.data', response.data)
             }
-            console.log('response.data', response.data)
+            dispatch(setAccessToken(response?.data?.result?.token))
+            console.log('response.data', response.data?.result?.token)
             return response?.data;
         }catch(error) {
             return rejectWithValue(serializeError(error))
@@ -35,11 +35,16 @@ const validateOTPSlice = createSlice({
         validateOTPStatus: 'idle',
         error: null,
         showAlert: false,
+        accessToken: null
+
     },
     reducers: {
         setShowAlert: (action, state) => {
             state.showAlert = action.payload
-        } 
+        },
+        setAccessToken: (action, state) => {
+            state.accessToken = action.payload
+        }
     },
     extraReducers: (builder) => {
         builder
@@ -48,6 +53,7 @@ const validateOTPSlice = createSlice({
             })
             .addCase(validateOTPUser.fulfilled, (state, action) => {
                 state.validateOTPData = action.payload,
+                state.accessToken = action?.payload?.result?.token
                 state.validateOTPStatus = STATUSES.IDLE
             })
             .addCase(validateOTPUser.rejected, (state, action) => {
@@ -57,4 +63,4 @@ const validateOTPSlice = createSlice({
 })
 
 export default validateOTPSlice.reducer;
-export const { setShowAlert } = validateOTPSlice.actions;
+export const { setShowAlert, setAccessToken } = validateOTPSlice.actions;

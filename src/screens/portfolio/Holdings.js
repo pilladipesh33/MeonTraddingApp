@@ -1,5 +1,5 @@
 import {View, Text, FlatList} from 'react-native';
-import React from 'react';
+import React, {useEffect} from 'react';
 import {styles} from './styles';
 import {Colors} from '../../constants/color';
 import Feather from 'react-native-vector-icons/Feather';
@@ -7,15 +7,23 @@ import SimpleLineIcons from 'react-native-vector-icons/SimpleLineIcons';
 import Octicons from 'react-native-vector-icons/Octicons';
 import {holdingData} from '../../constants/holdingData';
 import PortfolioContainer from './PortfolioContainer';
+import {useDispatch, useSelector} from 'react-redux';
+import {holdingItem} from '../../redux/store/holdingSlice';
 
 const Holdings = () => {
+  const dispatch = useDispatch();
+  const {holdingData} = useSelector(state => state.holding);
+  useEffect(() => {
+    dispatch(holdingItem());
+  }, []);
+  console.log('holdingData', holdingData);
   return (
     <View style={styles.bodyContainer}>
       <View style={[styles.boxContainer, styles.elevation]}>
         <View style={styles.rowContainer}>
           <View style={styles.columnContainer}>
             <Text style={styles.headingText}>Invested</Text>
-            <Text style={styles.contentText}>13,228.55</Text>
+              <Text style={styles.contentText}>13,228.55</Text>
           </View>
           <View style={[styles.columnContainerReverse]}>
             <Text style={[styles.headingText, {paddingLeft: 45}]}>Current</Text>
@@ -83,7 +91,7 @@ const Holdings = () => {
           <Text style={styles.searchBarText}>Analytics</Text>
         </View>
       </View>
-      <PortfolioContainer/>
+      <PortfolioContainer />
     </View>
   );
 };
