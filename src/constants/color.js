@@ -13,4 +13,14 @@ export const Colors = {
     BORDER_GREY: '#EBECED',
     PINK: '#FBE9E9',
     LIGHT_GREEN: '#E9F5E9',
+    DARK: '#1f2937',
+    DARK_TEXT:'#fafafa',
+    PURPLE: '#BB86FC'
+}
+
+export const darkColors = {
+    WHITE: '#FFFFFF',
+    PRIMARY: '#1f2937',
+    SECONDARY: '#111827',
+    TERTIARY: '#D1D5DB'
 }

@@ -128,6 +128,7 @@ function BottomTabNavigation() {
         name="Market"
         component={Market}
         options={{
+          headerShown: false,
           tabBarIcon: ({focused}) => (
             <View style={styles.container}>
               <Ionicons

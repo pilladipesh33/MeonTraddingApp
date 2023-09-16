@@ -7,6 +7,8 @@ import {styles} from './styles';
 import {Colors} from '../../constants/color';
 import {useDispatch, useSelector} from 'react-redux';
 import {setAccessToken} from '../../redux/store/validateOTPSlice';
+import { Avatar } from 'react-native-paper';
+import Header from '../../components/Header';
 
 const Profile = ({navigation}) => {
   const [userProfile, setUserProfile] = useState('');
@@ -43,6 +45,8 @@ const Profile = ({navigation}) => {
     }
   };
 
+  const mode = useSelector((state) => state?.theme?.mode);
+
   useEffect(() => {
     fetchUserDetails();
   }, []);
@@ -50,32 +54,30 @@ const Profile = ({navigation}) => {
   console.log('userProfile', userProfile);
 
   return (
-    <ScrollView style={{backgroundColor: Colors.WHITE}}>
-      <View style={styles.androidSafeArea}>
+    <ScrollView style={mode == 'Light' ? styles.androidSafeAreaDark : styles.androidSafeArea}>
+      <View>
+        <Header title={'Profile'} menu={true} onPress={() => navigation.openDrawer()}/>
         <View style={styles.container}>
+          <TouchableOpacity onPress={() => navigation.navigate('ChangeProfileDetails', {key: userProfile})}>
+              <Avatar.Text size={24} label={userProfile?.ClientName}  style={styles.picContainer}/>
+          </TouchableOpacity>
           <View style={styles.headingContainer}>
-            {/* <Feather name={'chevron-down'} size={40} color={Colors.MATT_BLACK} /> */}
-          </View>
-          <View style={styles.headingContainer}>
-            <Text style={styles.headingText}>{userProfile?.ClientName}</Text>
-            <View style={{paddingRight: 10}}>
-              <Feather name={'bell'} size={20} color={Colors.MATT_BLACK} />
-            </View>
+            <Text style={mode == 'Light'?styles.headingTextDark : styles.headingText}>{userProfile?.ClientName}</Text>
           </View>
         </View>
         <View style={styles.container}>
           <View style={styles.headingContainer}>
             <View style={styles.columnContainer}>
-              <Text style={styles.detailText}>E-mail</Text>
-              <Text style={styles.detailText}>Phone</Text>
-              <Text style={styles.detailText}>PAN</Text>
-              <Text style={styles.detailText}>Demat (BO)</Text>
+              <Text style={mode == 'Light'?styles.detailTextDark : styles.detailText}>E-mail</Text>
+              <Text style={mode == 'Light'?styles.detailTextDark : styles.detailText}>Phone</Text>
+              <Text style={mode == 'Light'?styles.detailTextDark : styles.detailText}>PAN</Text>
+              <Text style={mode == 'Light'?styles.detailTextDark : styles.detailText}>Demat (BO)</Text>
             </View>
             <View style={styles.columnContainer2}>
-              <Text style={styles.detailText2}>{userProfile?.EmailId}</Text>
-              <Text style={styles.detailText2}>{userProfile?.MobileNo}</Text>
-              <Text style={styles.detailText2}>{userProfile?.PAN}</Text>
-              <Text style={styles.detailText2}>
+              <Text style={mode == 'Light'?styles.detailText2Dark : styles.detailText2}>{userProfile?.EmailId}</Text>
+              <Text style={mode == 'Light'?styles.detailText2Dark : styles.detailText2}>{userProfile?.MobileNo}</Text>
+              <Text style={mode == 'Light'?styles.detailText2Dark : styles.detailText2}>{userProfile?.PAN}</Text>
+              <Text style={mode == 'Light'?styles.detailText2Dark : styles.detailText2}>
                 {userProfile?.DematAccountNumber}
               </Text>
             </View>
@@ -83,8 +85,8 @@ const Profile = ({navigation}) => {
         </View>
         <View style={styles.container}>
           <View style={{paddingTop: 10, paddingBottom: 10}}>
-            <Text style={styles.detailText2}>Bank accounts</Text>
-            <Text style={styles.detailText}>
+            <Text style={mode == 'Light'?styles.detailText2Dark : styles.detailText2}>Bank accounts</Text>
+            <Text style={mode == 'Light'?styles.detailTextDark : styles.detailText}>
               {userProfile == undefined
                 ? userProfile?.ClientBankInfoList[0].BankName
                 : 'NULL'}
@@ -94,14 +96,14 @@ const Profile = ({navigation}) => {
         <View style={styles.container}>
           <View style={styles.headingContainer}>
             <View style={styles.columnContainer}>
-              <Text style={styles.detailText}>Segments</Text>
-              <Text style={styles.detailText}>Demat authorisation</Text>
+              <Text style={mode == 'Light'?styles.detailTextDark :styles.detailText}>Segments</Text>
+              <Text style={mode == 'Light'?styles.detailTextDark : styles.detailText}>Demat authorisation</Text>
             </View>
             <View style={styles.columnContainer2}>
-              <Text style={[styles.detailText2, {color: Colors.BLUE}]}>
+              <Text style={[styles.detailText2, mode == 'Light' ? {color: Colors.LIGHT_BLUE} : {color: Colors.BLUE}]}>
                 NFO, MF, CDS, MCX, BSE, NSE
               </Text>
-              <Text style={[styles.detailText2, {color: Colors.BLUE}]}>
+              <Text style={[styles.detailText2, mode == 'Light' ? {color: Colors.LIGHT_BLUE} : {color: Colors.BLUE}]}>
                 POA
               </Text>
             </View>
@@ -111,10 +113,10 @@ const Profile = ({navigation}) => {
         <TouchableOpacity onPress={() => navigation.navigate('Portfolio')} style={styles.item}>
             <Feather
               name="briefcase"
-              size={24}
-              color={Colors.GREY}
+              size={24} 
+              {...mode == 'Light' ? {color: Colors.WHITE} : {color: Colors.GREY}}
             />
-            <Text style={styles.header}>Portfolio</Text>
+            <Text style={mode == 'Light' ? styles.headerDark : styles.header}>Portfolio</Text>
           </TouchableOpacity>
           <TouchableOpacity
             onPress={() => navigation.navigate('Funds')}
@@ -122,17 +124,27 @@ const Profile = ({navigation}) => {
             <MaterialIcons
               name="account-balance-wallet"
               size={24}
-              color={Colors.GREY}
+              {...mode == 'Light' ? {color: Colors.WHITE} : {color: Colors.GREY}}
             />
-            <Text style={styles.header}>Funds</Text>
+            <Text style={mode == 'Light' ? styles.headerDark : styles.header}>Funds</Text>
           </TouchableOpacity>
           <TouchableOpacity onPress={() => handleLogout()} style={styles.item}>
             <MaterialIcons
               name="logout"
               size={24}
-              color={Colors.GREY}
+              {...mode == 'Light' ? {color: Colors.WHITE} : {color: Colors.GREY}}
             />
-            <Text style={styles.header}>Logout</Text>
+            <Text style={mode == 'Light' ? styles.headerDark : styles.header}>Logout</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            onPress={() => navigation.navigate('Settings')}
+            style={styles.item}>
+            <MaterialIcons
+              name="settings"
+              size={24}
+              {...mode == 'Light' ? {color: Colors.WHITE} : {color: Colors.GREY}}
+            />
+            <Text style={mode == 'Light' ? styles.headerDark : styles.header}>Settings</Text>
           </TouchableOpacity>
         </View>
       </View>

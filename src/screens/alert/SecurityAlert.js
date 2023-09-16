@@ -11,15 +11,16 @@ import {Colors} from '../../constants/color';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Button } from '@rneui/themed';
+import { useSelector } from 'react-redux';
 
-const SecurityAlert = () => {
+const EquityAlert = () => {
+  const mode = useSelector((state) => state.theme.mode);
   const [productType, setProductType] = useState('');
   const ProductType = ["GreaterOrEqual","LessOrEqual","Greater","Less","Equal"];
   const [date, setDate] = useState(new Date());
   const [open, setOpen] = useState(false);
   const [userContact, setUserContact] = useState({});
-  const [checked, setChecked] = React.useState(false);
-  const [remarks, setRemarks] = useState('')
+  const [remarks, setRemarks] = useState('');
 
   async function userProfile() {
     const email = await AsyncStorage.getItem('EMAIL');
@@ -37,14 +38,14 @@ const SecurityAlert = () => {
   }, [userContact]);
 
   const handleSubmitAlert = () => {
-    alert('Please enter a symbol')
+    alert('Please select symbols');
   }
   return (
-    <View style={styles.container}>
+    <View style={mode == 'Light' ? styles.androidSafeAreaDark : styles.androidSafeArea}>
       <View style={{marginTop: 40}}>
         <SearchBox />
         <View style={styles.dropDownContainer}>
-          <Text>ALERT IF VALUE IS</Text>
+          <Text style={mode == 'Light' ? styles.txtDark : styles.txt}>ALERT IF VALUE IS</Text>
           <SelectDropdown //PRODUCT TYPE
             data={ProductType}
             onSelect={(selectedItem, index) => {
@@ -87,7 +88,7 @@ const SecurityAlert = () => {
               onPress={() => setOpen(true)}>
               <Ionicons
                 name="calendar-outline"
-                color={Colors.BLACK}
+                color={mode == 'Light' ? Colors.WHITE : Colors.BLACK}
                 size={30}
               />
             </Pressable>
@@ -107,7 +108,7 @@ const SecurityAlert = () => {
           </View>
           <View>
             <TextInput
-              placeholder={`Phone Number: ${userContact.phoneNumber}`}
+              placeholder={`Phone Number`}
               mode="outlined"
               contentStyle={styles.numberContainer}
               outlineColor={Colors.BLACK}
@@ -116,13 +117,13 @@ const SecurityAlert = () => {
               // style={styles.numberContainer}
             />
             <TextInput
-              placeholder={`Email ID: ${userContact.email}`}
+              placeholder={`Email ID`}
               mode="outlined"
               contentStyle={styles.numberContainer}
               outlineColor={Colors.BLACK}
               activeOutlineColor={Colors.BLACK}
               onChangeText={txt => setUserContact?.email(txt)}
-              // style={styles.numberContainer}
+              // style={styles.numberContai
             />
             <TextInput
               placeholder={`Remarks`}
@@ -155,7 +156,7 @@ const SecurityAlert = () => {
         </View>
       </View>
     </View>
-  )
-}
+  );
+};
 
-export default SecurityAlert
+export default EquityAlert;

@@ -8,6 +8,7 @@ import getInstrumentsDetailByIdSlice from '../../redux/store/getInstrumentsDetai
 // import {FlatList} from 'react-native-gesture-handler';
 
 const AlertList = () => {
+  const mode = useSelector((state) => state.theme.mode)
   const [alertListValue, setAlertListValue] = useState([]);
   const [instruments, setInstruments] = useState([]);
   const dispatch = useDispatch();
@@ -34,7 +35,7 @@ const AlertList = () => {
   }, []);
   //   console.log('alertListValue', instruments)
   return (
-    <View style={styles.container}>
+    <View style={mode == 'Light' ? styles.androidSafeAreaDark : styles.androidSafeArea}>
       <FlatList
         data={alertListValue}
         keyExtractor={item => item}
@@ -44,7 +45,7 @@ const AlertList = () => {
               <View style={styles.cardContainer}>
                 <View style={styles.headingContainer}>
                   <View style={styles.columnContainer}>
-                    <Text style={styles.headingText}>NIFTY 50</Text>
+                    <Text style={mode == 'Light' ? styles.headingTextDark : styles.headingText}>NIFTY 50</Text>
                     <Text style={styles.codeText}>BSE</Text>
                   </View>
                   <Text style={styles.statusText}>TRIGGERED</Text>

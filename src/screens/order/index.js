@@ -4,6 +4,7 @@ import { OrderTopBarNavigation } from '../../navigations/TopBarNavigation'
 import { styles } from './styles'
 import { useDispatch, useSelector } from 'react-redux'
 import { orderBookData } from '../../redux/store/orderBookSlice'
+import Header from '../../components/Header'
 
 const Order = () => {
   const dispatch = useDispatch();
@@ -15,6 +16,7 @@ const Order = () => {
       {/* <View style={styles.container}>
       <Text style={styles.headerText}>Orders</Text>
       </View> */}
+      <Header menu={true} title={'Orders'} onPress={() => navigation.openDrawer()} />
       <OrderTopBarNavigation/>
     </View>
   )

@@ -12,6 +12,7 @@ const WatchlistContainer = ({navigation}) => {
   const [groupList, setGroupList] = useState([]);
   const dispatch = useDispatch();
   const [groupName, setGroupName] = useState('');
+  const mode = useSelector((state) => state.theme.mode);
 
   useEffect(() => {
     dispatch(getGroupDetails());
@@ -35,7 +36,7 @@ const WatchlistContainer = ({navigation}) => {
               style={{flexDirection: 'row', justifyContent: 'space-between'}}>
               <View
                 style={[styles.containerReverse, {alignItems: 'flex-start'}]}>
-                <Text style={styles.headingText}>{item?.groupName}</Text>
+                <Text style={mode == 'Light' ? styles.headingTextDark : styles.headingText}>{item?.groupName}</Text>
                 <Text style={styles.subContentText}>
                   {item?.exchangeSegment}
                 </Text>
@@ -74,6 +75,11 @@ const styles = StyleSheet.create({
   },
   headingText: {
     color: Colors.BLACK,
+    fontSize: 15,
+    fontWeight: '400',
+  },
+  headingTextDark: {
+    color: Colors.DARK_TEXT,
     fontSize: 15,
     fontWeight: '400',
   },

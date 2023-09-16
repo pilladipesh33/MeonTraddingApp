@@ -7,36 +7,22 @@ import {ExchangeMessageData} from '../../constants/data';
 import ExchangeMessgesContainer from './ExchangeMessgesContainer';
 import {FlatList} from 'react-native-gesture-handler';
 import {Text, Card, Button, Icon} from '@rneui/themed';
+import Header from '../../components/Header';
 // import ExchangeMessgesContainer from './ExchangeMessgesContainer';
 // import CustomFlatList from '../../components/CustomFlatlist';
 
-const ExchangeMessage = () => {
-  // const [messageData, setMessageData] = useState('');
-  // const dispatch = useDispatch();
-  // const {exchangeMessageData, exchangeMessageStatus} = useSelector(
-  //   state => state.getExchangeMessage,
-  // );
-
-  // useEffect(() => {
-  //   if (exchangeMessageStatus == 'idle') {
-  //     dispatch(getExchangeMessageItem());
-  //     if (exchangeMessageData.type == 'success') {
-  //       setMessageData(exchangeMessageData);
-  //     }
-  //   }
-  // }, [exchangeMessageStatus]);
-
-  // console.log(messageData?.result);
+const ExchangeMessage = ({navigation}) => {
+  const mode = useSelector((state) => state.theme.mode)
   return (
-    <View style={styles.container}>
-      {/* <ExchangeMessgesContainer data={ExchangeMessageData}/> */}
+    <View style={mode == 'Light' ? styles.androidSafeAreaDark : styles.androidSafeArea}>
+      <Header menu={true} title={'Messages'} onPress={() => navigation.openDrawer()} />
       <FlatList
         data={ExchangeMessageData}
         keyExtractor={item => item.SequenceNumber}
         renderItem={({item}) => {
           return (
-            <Card containerStyle={{marginTop: 15}}>
-              <Text style={styles.fontText}>{item?.BroadcastMessage}</Text>
+            <Card containerStyle={mode == 'Light' ? styles.cardContainerDark : styles.cardContainer}>
+              <Text style={mode == 'Light' ? styles.fontTextDark : styles.fontText}>{item?.BroadcastMessage}</Text>
             </Card>
           );
         }}

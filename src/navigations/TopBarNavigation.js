@@ -1,72 +1,39 @@
-import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
-import Holdings from "../screens/portfolio/Holdings";
-import Positions from "../screens/portfolio/Positions";
-import { Colors } from "../constants/color";
-import Open from "../screens/order/Open";
-import Executed from "../screens/order/Executed";
-import Others from "../screens/order/Others";
-import Gainer from "../screens/scanners/Gainer";
-import HighLowStatus from "../screens/scanners/HighLowStatus";
-import Breaker from "../screens/scanners/Breaker";
-import AlertList from "../screens/alert/AlertList";
-import EquityAlert from "../screens/alert/EquityAlert";
-import SecurityAlert from "../screens/alert/SecurityAlert";
+import {createMaterialTopTabNavigator} from '@react-navigation/material-top-tabs';
+import Holdings from '../screens/portfolio/Holdings';
+import Positions from '../screens/portfolio/Positions';
+import {Colors} from '../constants/color';
+import Open from '../screens/order/Open';
+import Executed from '../screens/order/Executed';
+import Others from '../screens/order/Others';
+import Gainer from '../screens/scanners/Gainer';
+import HighLowStatus from '../screens/scanners/HighLowStatus';
+import Breaker from '../screens/scanners/Breaker';
+import AlertList from '../screens/alert/AlertList';
+import EquityAlert from '../screens/alert/EquityAlert';
+import SecurityAlert from '../screens/alert/SecurityAlert';
+import {useSelector} from 'react-redux';
 
 const Tab = createMaterialTopTabNavigator();
 
-export function PortfolioTopBarNavigation() {
-    return (
-      <Tab.Navigator
-        screenOptions={{
-          tabBarScrollEnabled: true,
-          tabBarGap: 55,
-          tabBarIndicatorStyle: {
-            backgroundColor: Colors.BLUE,
-            height: 1,
-          },
-          tabBarIndicatorContainerStyle: {
-            marginLeft: 30,
-          },
-          tabBarStyle: {
-            backgroundColor: Colors.TRANSPARENT,
-            paddingTop: 15,
-            paddingLeft: 16,
-            elevation: 0
-          },
-          tabBarLabelStyle: {
-            fontSize: 15,
-            textTransform: 'capitalize',
-            marginHorizontal: 0,
-          },
-          tabBarActiveTintColor: Colors.BLUE,
-          tabBarInactiveTintColor: Colors.MATT_BLACK,
-          tabBarPressColor: 'transparent',
-        }}
-        sceneContainerStyle={{backgroundColor: Colors.TRANSPARENT}}>
-        <Tab.Screen name='Holdings' component={Holdings} />
-        <Tab.Screen name='Positions' component={Positions} />
-      </Tab.Navigator>
-    );
-  }
 
-  export function OrderTopBarNavigation() {
-    return (
-      <Tab.Navigator
+export function PortfolioTopBarNavigation() {
+  return (
+    <Tab.Navigator
       screenOptions={{
+        tabBarScrollEnabled: true,
+        tabBarGap: 55,
         tabBarIndicatorStyle: {
           backgroundColor: Colors.BLUE,
           height: 1,
         },
         tabBarIndicatorContainerStyle: {
-          marginLeft: 15, //indicator for current screen
-          width: '80%',
-          
+          marginLeft: 30,
         },
         tabBarStyle: {
           backgroundColor: Colors.TRANSPARENT,
           paddingTop: 15,
-          //paddingLeft: 10,
-          elevation: 0
+          paddingLeft: 16,
+          elevation: 0,
         },
         tabBarLabelStyle: {
           fontSize: 15,
@@ -77,82 +44,191 @@ export function PortfolioTopBarNavigation() {
         tabBarInactiveTintColor: Colors.MATT_BLACK,
         tabBarPressColor: 'transparent',
       }}
-        sceneContainerStyle={{backgroundColor: Colors.TRANSPARENT}}>
-        <Tab.Screen name={'Open'} component={Open} />
-        <Tab.Screen name={'Executed'} component={Executed} />
-        <Tab.Screen name={'Others'} component={Others} />
-      </Tab.Navigator>
-    );
-  }
+      sceneContainerStyle={{backgroundColor: Colors.TRANSPARENT}}>
+      <Tab.Screen name="Holdings" component={Holdings} />
+      <Tab.Screen name="Positions" component={Positions} />
+    </Tab.Navigator>
+  );
+}
 
-  export function ScannerTopBarNavigation() {
-    return (
-      <Tab.Navigator
+export function OrderTopBarNavigation() {
+  const mode = useSelector((state) => state.theme.mode);
+  return (
+    <Tab.Navigator
       screenOptions={{
-        tabBarIndicatorStyle: {
-          backgroundColor: Colors.BLUE,
-          height: 1,
-        },
+        ...(mode == 'Light'
+        ? {
+          tabBarIndicatorStyle: {
+            backgroundColor: Colors.PURPLE,
+            height: 1,
+          },
+          tabBarStyle: {
+            backgroundColor: Colors.DARK,
+            paddingTop: 15,
+            //paddingLeft: 10,
+            elevation: 0,
+          },
+          tabBarActiveTintColor: Colors.PURPLE,
+          tabBarInactiveTintColor: Colors.WHITE,
+          tabBarPressColor: 'transparent',
+        }
+        : {
+            tabBarIndicatorStyle: {
+              backgroundColor: Colors.BLUE,
+              height: 1,
+            },
+            tabBarStyle: {
+              backgroundColor: Colors.WHITE,
+              paddingTop: 15,
+              //paddingLeft: 10,
+              elevation: 0,
+            },
+            tabBarActiveTintColor: Colors.BLUE,
+            tabBarInactiveTintColor: Colors.MATT_BLACK,
+            tabBarPressColor: 'transparent',
+          }),
+      tabBarIndicatorContainerStyle: {
+        marginLeft: 15, //indicator for current screen
+        width: '80%',
+      },
+      tabBarLabelStyle: {
+        fontSize: 15,
+        textTransform: 'capitalize',
+        marginHorizontal: 0,
+      },
+      }}
+      sceneContainerStyle={{backgroundColor: Colors.TRANSPARENT}}>
+      <Tab.Screen name={'Open'} component={Open} />
+      <Tab.Screen name={'Executed'} component={Executed} />
+      <Tab.Screen name={'Others'} component={Others} />
+    </Tab.Navigator>
+  );
+}
+
+export function ScannerTopBarNavigation() {
+  const mode = useSelector((state) => state.theme.mode)
+  return (
+    <Tab.Navigator
+      screenOptions={{
+        ...(mode == 'Light'
+          ? {
+            tabBarIndicatorStyle: {
+              backgroundColor: Colors.PURPLE,
+              height: 1,
+            },
+            tabBarStyle: {
+              backgroundColor: Colors.DARK,
+              paddingTop: 15,
+              //paddingLeft: 10,
+              elevation: 0,
+            },
+            tabBarActiveTintColor: Colors.PURPLE,
+            tabBarInactiveTintColor: Colors.WHITE,
+            tabBarPressColor: 'transparent',
+          }
+          : {
+              tabBarIndicatorStyle: {
+                backgroundColor: Colors.BLUE,
+                height: 1,
+              },
+              tabBarStyle: {
+                backgroundColor: Colors.WHITE,
+                paddingTop: 15,
+                //paddingLeft: 10,
+                elevation: 0,
+              },
+              tabBarActiveTintColor: Colors.BLUE,
+              tabBarInactiveTintColor: Colors.MATT_BLACK,
+              tabBarPressColor: 'transparent',
+            }),
         tabBarIndicatorContainerStyle: {
           marginLeft: 15, //indicator for current screen
           width: '80%',
-          
-        },
-        tabBarStyle: {
-          backgroundColor: Colors.WHITE,
-          paddingTop: 15,
-          //paddingLeft: 10,
-          elevation: 0
         },
         tabBarLabelStyle: {
           fontSize: 15,
           textTransform: 'capitalize',
           marginHorizontal: 0,
         },
-        tabBarActiveTintColor: Colors.BLUE,
-        tabBarInactiveTintColor: Colors.MATT_BLACK,
-        tabBarPressColor: 'transparent',
       }}
-        sceneContainerStyle={{backgroundColor: Colors.TRANSPARENT}}>
-        <Tab.Screen name={'Gainer'} component={Gainer} options={{title: 'Top Gainer'}}/>
-        <Tab.Screen name={'Breaker'} component={Breaker} />
-        <Tab.Screen name={'HighLowStatus'} component={HighLowStatus} options={{title: 'High / Low'}}/>
-      </Tab.Navigator>
-    );
-  }
+      sceneContainerStyle={{backgroundColor: Colors.TRANSPARENT}}>
+      <Tab.Screen
+        name={'Gainer'}
+        component={Gainer}
+        options={{title: 'Top Gainer'}}
+      />
+      <Tab.Screen name={'Breaker'} component={Breaker} />
+      <Tab.Screen
+        name={'HighLowStatus'}
+        component={HighLowStatus}
+        options={{title: 'High / Low'}}
+      />
+    </Tab.Navigator>
+  );
+}
 
-  export function AlertTopBarNavigation() {
-    return (
-      <Tab.Navigator
+export function AlertTopBarNavigation() {
+  const mode = useSelector(state => state.theme.mode);
+  return (
+    <Tab.Navigator
       screenOptions={{
-        tabBarIndicatorStyle: {
-          backgroundColor: Colors.BLUE,
-          height: 1,
-        },
+        ...(mode == 'Light'
+          ? {
+            tabBarIndicatorStyle: {
+              backgroundColor: Colors.PURPLE,
+              height: 1,
+            },
+            tabBarStyle: {
+              backgroundColor: Colors.DARK,
+              paddingTop: 15,
+              //paddingLeft: 10,
+              elevation: 0,
+            },
+            tabBarActiveTintColor: Colors.PURPLE,
+            tabBarInactiveTintColor: Colors.WHITE,
+            tabBarPressColor: 'transparent',
+          }
+          : {
+              tabBarIndicatorStyle: {
+                backgroundColor: Colors.BLUE,
+                height: 1,
+              },
+              tabBarStyle: {
+                backgroundColor: Colors.WHITE,
+                paddingTop: 15,
+                //paddingLeft: 10,
+                elevation: 0,
+              },
+              tabBarActiveTintColor: Colors.BLUE,
+              tabBarInactiveTintColor: Colors.MATT_BLACK,
+              tabBarPressColor: 'transparent',
+            }),
         tabBarIndicatorContainerStyle: {
           marginLeft: 15, //indicator for current screen
           width: '80%',
-          
-        },
-        tabBarStyle: {
-          backgroundColor: Colors.WHITE,
-          paddingTop: 15,
-          //paddingLeft: 10,
-          elevation: 0
         },
         tabBarLabelStyle: {
           fontSize: 15,
           textTransform: 'capitalize',
           marginHorizontal: 0,
         },
-        tabBarActiveTintColor: Colors.BLUE,
-        tabBarInactiveTintColor: Colors.MATT_BLACK,
-        tabBarPressColor: 'transparent',
       }}
-        sceneContainerStyle={{backgroundColor: Colors.TRANSPARENT}}>
-        <Tab.Screen name={'EquityAlert'} component={EquityAlert} options={{title: 'Equity Alert'}}/>
-        <Tab.Screen name={'SecurityAlert'} component={SecurityAlert} options={{title: 'Security Alert'}}/>
-        <Tab.Screen name={'AlertList'} component={AlertList} options={{title: 'Alert List'}}/>
-      </Tab.Navigator>
-    );
-  }
+      sceneContainerStyle={{backgroundColor: Colors.TRANSPARENT}}>
+      <Tab.Screen
+        name={'EquityAlert'}
+        component={EquityAlert}
+        options={{title: 'Equity Alert'}}
+      />
+      <Tab.Screen
+        name={'SecurityAlert'}
+        component={SecurityAlert}
+        options={{title: 'Security Alert'}}
+      />
+      <Tab.Screen
+        name={'AlertList'}
+        component={AlertList}
+        options={{title: 'Alert List'}}
+      />
+    </Tab.Navigator>
+  );
+}

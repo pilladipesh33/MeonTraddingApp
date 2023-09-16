@@ -1,4 +1,4 @@
-import { configureStore } from "@reduxjs/toolkit"
+import { configureStore, getDefaultMiddleware } from "@reduxjs/toolkit"
 import loginSlice from "./store/loginSlice";
 import validateOTPSlice from "./store/validateOTPSlice";
 import userProfileSlice from "./store/userProfileSlice";
@@ -18,9 +18,15 @@ import placeOrderSlice from "./store/placeOrderSlice";
 import getExchangeMessageSlice from "./store/getExchangeMessageSlice";
 import getAlertListSlice from "./store/getAlertListSlice";
 import holdingSlice from "./store/holdingSlice";
-;
+import forgotPasswordSlice from "./store/forgotPasswordSlice";
+import themeSlice from "./store/themeSlice";
+import changePasswordSlice from "./store/changePasswordSlice";
 
 const store = configureStore({
+    middleware: (getDefaultMiddleware) => getDefaultMiddleware({
+        immutableCheck: {warnAfter: 150},
+        serializableCheck: {warnAfter : 150}
+    }),
     reducer: {
         login : loginSlice,
         validateOTP : validateOTPSlice,
@@ -41,6 +47,9 @@ const store = configureStore({
         getExchangeMessage: getExchangeMessageSlice,
         getAlertList: getAlertListSlice,
         holding: holdingSlice,
+        forgotPassword: forgotPasswordSlice,
+        theme: themeSlice,
+        changePassword: changePasswordSlice,
     }
 });
 export default store;

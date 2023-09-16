@@ -1,11 +1,17 @@
-import {StyleSheet} from 'react-native';
+import {StyleSheet, Platform, StatusBar} from 'react-native';
 import {Colors} from '../../constants/color';
 import {SCREEN_HEIGHT, SCREEN_WIDTH} from '../../constants/dimensions';
 
 export const styles = StyleSheet.create({
-  container: {
+  androidSafeArea: {
     flex: 1,
+    paddingTop: Platform.OS === 'android' ? StatusBar.currentHeight : 0,
     backgroundColor: Colors.WHITE,
+  },
+  androidSafeAreaDark: {
+    flex: 1,
+    paddingTop: Platform.OS === 'android' ? StatusBar.currentHeight : 0,
+    backgroundColor: Colors.DARK,
   },
   dropDownContainer: {
     paddingTop: '15%',
@@ -62,12 +68,28 @@ export const styles = StyleSheet.create({
     color: Colors.BLACK,
     fontSize: 16
   },
+  headingTextDark: {
+    fontWeight: '700',
+    color: Colors.WHITE,
+    fontSize: 16
+  },
   codeText: {
+    color: Colors.GREY,
+  },
+  codeTextDark: {
     color: Colors.GREY,
   },
   statusText: {
     fontWeight: '700',
     color: Colors.GREEN,
     fontSize: 16
+  },
+  txt: {
+    color: Colors.BLACK,
+    paddingBottom: 5
+  },
+  txtDark: {
+    color: Colors.DARK_TEXT,
+    paddingBottom: 5
   }
 });

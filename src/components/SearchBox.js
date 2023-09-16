@@ -34,7 +34,7 @@ const styles = StyleSheet.create({
     height: SCREEN_HEIGHT * 0.06,
     position: 'absolute',
     left: '5%',
-    top: -25,
+    top: 5,
     borderRadius: 5,
   },
   elevation: {

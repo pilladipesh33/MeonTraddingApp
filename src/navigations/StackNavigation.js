@@ -33,7 +33,6 @@ function StackNavigation() {
         <Stack.Screen name='Login' component={Login} />
         <Stack.Screen name='Drawer' component={DrawerNavigation} />
         <Stack.Screen name='Portfolio' component={Portfolio} />
-
         {/* <Stack.Screen name='Stack' component={StackNavigation} /> */}
       </Stack.Navigator>
   );

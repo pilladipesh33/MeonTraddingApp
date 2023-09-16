@@ -1,11 +1,14 @@
 import { View, Text } from 'react-native'
 import React from 'react'
 import { styles } from './styles'
+import { useSelector } from 'react-redux'
+import Header from '../../components/Header'
 
-const MarketView = () => {
+const MarketView = ({navigation}) => {
+  const mode = useSelector((state) => state.theme.mode);
   return (
-    <View style={styles.androidSafeView}>
-      <Text style={styles.headerText}>Stocks</Text>
+    <View style={mode == 'Light' ? styles.androidSafeAreaDark : styles.androidSafeArea}>
+      <Header menu={true} title={'Stocks'} onPress={() => navigation.openDrawer()} />
     </View>
   )
 }

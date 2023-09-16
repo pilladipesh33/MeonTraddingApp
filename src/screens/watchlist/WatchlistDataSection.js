@@ -16,6 +16,7 @@ const WatchlistDataSection = ({navigation}) => {
   const hideModal = () => setVisible(false);
   const containerStyle = {backgroundColor: 'white', padding: 20};
   const [groupName, setGroupName] = useState('');
+  const mode = useSelector((state) => state.theme.mode);
 
   const dispatch = useDispatch();
   const {addedGroup, addedGroupStatus} = useSelector(state => state.addGroup);
@@ -32,7 +33,7 @@ const WatchlistDataSection = ({navigation}) => {
   console.log('name', addedGroup);
   return (
     <View>
-      <View style={styles.bodyContainer}>
+      <View style={mode == 'Light' ? styles.bodyContainerDark : styles.bodyContainer}>
         <View style={styles.bodyContentContainer}>
           <SearchBox navigation={navigation}/>
           {/* <TouchableOpacity
@@ -87,10 +88,13 @@ export default WatchlistDataSection;
 
 const styles = StyleSheet.create({
   bodyContainer: {
-    backgroundColor: Colors.WHITE,
-    height: '100%',
-    top: 20,
-    borderRadius: 20,
+    // backgroundColor: Colors.WHITE,
+    // height: '100%',
+    // top: 20,
+    backgroundColor: Colors.WHITE
+  },
+  bodyContainerDark: {
+    backgroundColor: Colors.DARK
   },
   bodyContentContainer: {paddingTop: '15%', paddingRight: 10},
   buttonText: {

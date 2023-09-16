@@ -2,11 +2,16 @@ import {StyleSheet, Platform, StatusBar} from 'react-native';
 import { Colors } from '../../constants/color';
 
 export const styles = StyleSheet.create({
-    // androidSafeArea: {
-    //     flex: 1,
-    //     paddingTop: Platform.OS === 'android' ? StatusBar.currentHeight : 0,
-    //     backgroundColor: Colors.WHITE,
-    //   },
+    androidSafeArea: {
+        flex: 1,
+        paddingTop: Platform.OS === 'android' ? StatusBar.currentHeight : 0,
+        backgroundColor: Colors.WHITE,
+      },
+      androidSafeAreaDark: {
+        flex: 1,
+        paddingTop: Platform.OS === 'android' ? StatusBar.currentHeight : 0,
+        backgroundColor: Colors.DARK,
+      },
       container: {
         paddingLeft: 10,
         paddingRight: 10,
@@ -19,21 +24,39 @@ export const styles = StyleSheet.create({
         fontWeight: '500',
         color: Colors.MATT_BLACK,
       },
+      headingTextDark: {
+        fontSize: 24,
+        fontWeight: '500',
+        color: Colors.DARK_TEXT,
+      },
       headingContainer: {
         flexDirection: 'row',
         justifyContent: 'space-between',
         alignItems: 'center',
         paddingBottom: 10,
+        paddingTop: 10
       },
       subHeadingText: {
         fontSize: 15,
         fontWeight: '300',
         color: Colors.MATT_BLACK,
       },
+      subHeadingTextDark: {
+        fontSize: 15,
+        fontWeight: '300',
+        color: Colors.DARK_TEXT
+      },
       header: {
         fontWeight: '700',
         fontSize: 16,
         color: Colors.BLACK,
+        textAlign: 'center',
+        paddingLeft: 15
+      },
+      headerDark: {
+        fontWeight: '700',
+        fontSize: 16,
+        color: Colors.DARK_TEXT,
         textAlign: 'center',
         paddingLeft: 15
       },
@@ -70,9 +93,33 @@ export const styles = StyleSheet.create({
         color: Colors.GREY,
         paddingTop: 5,
       },
+      detailTextDark: {
+        fontSize: 15,
+        color: '#B3B3B3',
+        paddingTop: 5,
+      },
       detailText2: {
         fontSize: 15,
         color: Colors.BLACK,
         paddingTop: 5,
       },
+      detailText2Dark: {
+        fontSize: 15,
+        color: Colors.DARK_TEXT,
+        paddingTop: 5,
+      },
+      picContainer: {
+        height: 100,
+        width: 100,
+        borderRadius: 50,
+        backgroundColor: Colors.DARK_BLUE,
+      },
+      editContainer: {
+        justifyContent: 'center',
+        alignItems: 'center'
+      },
+      editButtonContainer: {
+        position: 'absolute',
+        
+      }
 })

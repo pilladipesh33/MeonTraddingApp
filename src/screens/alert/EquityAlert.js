@@ -11,8 +11,10 @@ import {Colors} from '../../constants/color';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Button } from '@rneui/themed';
+import { useSelector } from 'react-redux';
 
 const EquityAlert = () => {
+  const mode = useSelector((state) => state.theme.mode);
   const [productType, setProductType] = useState('');
   const ProductType = ["GreaterOrEqual","LessOrEqual","Greater","Less","Equal"];
   const [date, setDate] = useState(new Date());
@@ -39,11 +41,11 @@ const EquityAlert = () => {
     alert('Please select symbols');
   }
   return (
-    <View style={styles.container}>
+    <View style={mode == 'Light' ? styles.androidSafeAreaDark : styles.androidSafeArea}>
       <View style={{marginTop: 40}}>
         <SearchBox />
         <View style={styles.dropDownContainer}>
-          <Text>ALERT IF VALUE IS</Text>
+          <Text style={mode == 'Light' ? styles.txtDark : styles.txt}>ALERT IF VALUE IS</Text>
           <SelectDropdown //PRODUCT TYPE
             data={ProductType}
             onSelect={(selectedItem, index) => {
@@ -86,7 +88,7 @@ const EquityAlert = () => {
               onPress={() => setOpen(true)}>
               <Ionicons
                 name="calendar-outline"
-                color={Colors.BLACK}
+                color={mode == 'Light' ? Colors.WHITE : Colors.BLACK}
                 size={30}
               />
             </Pressable>

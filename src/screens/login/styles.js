@@ -19,5 +19,18 @@ export const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     paddingLeft: '10%'
+  },
+  txtContainer: {
+    paddingTop: 10,
+    flexDirection: 'row-reverse',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    paddingRight: 10,
+    paddingLeft: 10
+  },
+  txt: {
+    fontWeight: '500',
+    fontSize: 16,
+    color: Colors.GREY
   }
 });

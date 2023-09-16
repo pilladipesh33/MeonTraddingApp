@@ -13,26 +13,47 @@ import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityI
 import Alert from '../screens/alert';
 import ExchangeMessage from '../screens/messages';
 import Reports from '../screens/reports';
-import Foundation from 'react-native-vector-icons/Foundation'
+import Foundation from 'react-native-vector-icons/Foundation';
 import Scanners from '../screens/scanners';
+import {useSelector} from 'react-redux';
+import FontAwesome from 'react-native-vector-icons/FontAwesome'
 
 const Drawer = createDrawerNavigator();
 
 const DrawerNavigation = () => {
+  const mode = useSelector(state => state.theme.mode);
   return (
     <Drawer.Navigator
+      backBehavior="order"
       screenOptions={{
-        headerStyle: {
-          backgroundColor: Colors.TRANSPARENT,
-        },
-        drawerContentContainerStyle: {
-          paddingTop: SCREEN_HEIGHT - WINDOW_HEIGHT,
-        },
-        drawerActiveTintColor: Colors.BLUE,
-        drawerInactiveBackgroundColor: Colors.WHITE,
-        drawerLabelStyle: {fontSize: 16, fontWeight: '600'}
+        ...(mode == 'Light'
+          ? {
+              headerShown: false,
+              drawerContentContainerStyle: {
+                flex: 1,
+                paddingTop: SCREEN_HEIGHT - WINDOW_HEIGHT,
+                backgroundColor: Colors.DARK
+              },
+              drawerActiveBackgroundColor: Colors.PURPLE,
+              drawerActiveTintColor: Colors.WHITE,
+              drawerInactiveBackgroundColor: Colors.DARK,
+              drawerInactiveTintColor: Colors.WHITE,
+              drawerLabelStyle: {fontSize: 16, fontWeight: '600'},
+            }
+          : {
+              headerShown: false,
+              drawerContentContainerStyle: {
+                flex: 1,
+                paddingTop: SCREEN_HEIGHT - WINDOW_HEIGHT,
+                backgroundColor: Colors.WHITE
+              },
+              drawerActiveTintColor: Colors.MATT_BLACK,
+              drawerInactiveTintColor: Colors.GREY,
+              drawerInactiveBackgroundColor: Colors.WHITE,
+              drawerLabelStyle: {fontSize: 16, fontWeight: '600'},
+            }),
       }}>
-        <Drawer.Screen
+      <Drawer.Screen
         name="Tools"
         component={Tools}
         options={{
@@ -41,7 +62,7 @@ const DrawerNavigation = () => {
             <MaterialCommunityIcons
               name="tools"
               size={25}
-              color={focused ? Colors.BLUE : Colors.BLACK}
+              color={focused ? Colors.BLACK : Colors.GREY}
             />
           ),
         }}
@@ -55,7 +76,7 @@ const DrawerNavigation = () => {
             <Feather
               name="bar-chart-2"
               size={25}
-              color={focused ? Colors.BLUE : Colors.BLACK}
+               color={focused ? Colors.BLACK : Colors.GREY}
             />
           ),
         }}
@@ -69,13 +90,13 @@ const DrawerNavigation = () => {
             <Ionicons
               name="chatbox-outline"
               size={25}
-              color={focused ? Colors.BLUE : Colors.BLACK}
+              color={focused ? Colors.BLACK : Colors.GREY}
             />
           ),
           headerTitle: 'Messages',
         }}
       />
-     
+
       <Drawer.Screen
         name="Alert"
         component={Alert}
@@ -85,12 +106,12 @@ const DrawerNavigation = () => {
             <Feather
               name="bell"
               size={25}
-              color={focused ? Colors.BLUE : Colors.BLACK}
+              color={focused ? Colors.BLACK : Colors.GREY}
             />
           ),
         }}
       />
-       <Drawer.Screen
+      <Drawer.Screen
         name="Profile"
         component={Profile}
         options={{
@@ -99,7 +120,7 @@ const DrawerNavigation = () => {
             <Feather
               name="user"
               size={25}
-              color={focused ? Colors.BLUE : Colors.BLACK}
+              color={focused ? Colors.BLACK : Colors.GREY}
             />
           ),
         }}
@@ -113,7 +134,7 @@ const DrawerNavigation = () => {
             <Foundation
               name="results"
               size={25}
-              color={focused ? Colors.BLUE : Colors.BLACK}
+              color={focused ? Colors.BLACK : Colors.GREY}
             />
           ),
         }}

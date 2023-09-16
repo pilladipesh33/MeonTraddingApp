@@ -5,7 +5,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import {useDispatch, useSelector} from 'react-redux';
 import {connectToSocket} from '../redux/store/socketConnectionSlice';
 import StackNavigation from './StackNavigation';
-import {NavigationContainer} from '@react-navigation/native';
+import {NavigationContainer, DarkTheme} from '@react-navigation/native';
 import DrawerNavigation from './DrawerNavigation';
 import {createStackNavigator} from '@react-navigation/stack';
 import BottomTabNavigation from './bottomTabNavigation';
@@ -21,6 +21,10 @@ import BuySellScreen from '../screens/buy&sell';
 import {selectIsLoggedIn} from '../redux/store/validateOTPSlice';
 import Portfolio from '../screens/portfolio';
 import {Colors} from '../constants/color';
+import ForgotPassword from '../screens/forgotPassword';
+import Settings from '../screens/settings';
+import {Provider as PaperProvider, MD3DarkTheme as PaperDarkTheme} from 'react-native-paper'
+import ChangeProfileDetails from '../screens/profile/ChangeProfileDetails';
 
 const Stack = createStackNavigator();
 
@@ -39,12 +43,13 @@ export const Routes = () => {
   const {accessToken, validateOTPData} = useSelector(
     state => state.validateOTP,
   );
-  console.log('accessToken', accessToken);
+  console.log('accessToken', storageToken);
   console.log('validateOTPData', validateOTPData);
 
   return (
     <View style={{flex: 1}}>
       <NavigationContainer>
+        {/* <PaperProvider theme={PaperDarkTheme}> */}
         <Stack.Navigator
           screenOptions={{
             headerShown: false,
@@ -69,15 +74,19 @@ export const Routes = () => {
                   }
                 }}
               />
+              <Stack.Screen name='Settings' component={Settings} />
+              <Stack.Screen name='ChangeProfileDetails' component={ChangeProfileDetails} />
             </>
           ) : (
             <>
               <Stack.Screen name="Login" component={Login} />
               <Stack.Screen name="OTP" component={OTPValidation} />
               <Stack.Screen name="SignUp" component={SignUp} />
+              <Stack.Screen name='ForgotPassword' component={ForgotPassword} />
             </>
           )}
         </Stack.Navigator>
+        {/* </PaperProvider> */}
       </NavigationContainer>
     </View>
   );

@@ -13,14 +13,18 @@ import {Colors} from '../../constants/color';
 import DropDownArrow from '../../components/DropDownArrow';
 import {styles} from './styles';
 import WatchlistDataSection from './WatchlistDataSection';
+import Header from '../../components/Header';
+import { useSelector } from 'react-redux';
 
 const Watchlist = ({navigation}) => {
   const [isBannerVisible, setBannerVisible] = useState(false);
   const toggelBanner = () => {
     setBannerVisible(!isBannerVisible);
   };
+  const mode = useSelector((state) => state.theme.mode);
   return (
-    <View style={styles.androidSafeArea}>
+    <View style={mode == 'Light' ? styles.androidSafeAreaDark : styles.androidSafeArea}>
+      <Header title={'Watchlist'} menu={true} onPress={() => navigation.openDrawer()} />
       {/* {isBannerVisible && <DropDownArrow />}
       <View style={styles.container}>
         <TouchableOpacity onPress={() => navigation.navigate('MyDrawer')}>
