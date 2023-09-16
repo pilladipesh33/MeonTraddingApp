@@ -6,7 +6,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { orderBookData } from '../../redux/store/orderBookSlice'
 import Header from '../../components/Header'
 
-const Order = () => {
+const Order = ({navigation}) => {
   const dispatch = useDispatch();
   useEffect(() => {
       dispatch(orderBookData());
