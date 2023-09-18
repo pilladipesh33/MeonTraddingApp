@@ -7,7 +7,7 @@ export const loginUser = createAsyncThunk(
     'login/fetch',
     async (data, {rejectWithValue, serializeError, dispatch, navigation}) => {
         let payload = JSON.stringify(data);
-        console.log(data);
+        // console.log(data);
         try{
             const response = await axios.post(
                 "https://itrade.investmentwallet.in:10121/enterprise/auth/validateuser",
@@ -16,7 +16,7 @@ export const loginUser = createAsyncThunk(
             dispatch(setShowAlert(true))
             if(response?.data?.type == 'success'){
                 AsyncStorage.setItem('USER_ID', response?.data?.result?.userID)
-                console.log('login', response.data)
+                // console.log('login', response.data)
                 navigation.navigate('OTP')
             }
             return response?.data

@@ -14,7 +14,7 @@ const Login = ({navigation, route}) => {
   const {userData} = useSelector(state => state.login);
   const key = route?.params?.key;
 
-  console.log('key', key)
+  //console.log('key', key)
 
   useEffect(() => {
     if (payload) {

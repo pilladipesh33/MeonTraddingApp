@@ -6,7 +6,7 @@ import { STATUSES } from "./apiStatus";
 export const changePasswordItem = createAsyncThunk(
     'changePassword/fetch',
     async(data, {rejectWithValue, serializeError, dispatch}) => {
-        console.log(data)
+        // console.log(data)
         try {
             const token = await AsyncStorage.getItem('TOKEN');
             const response = await axios.post(

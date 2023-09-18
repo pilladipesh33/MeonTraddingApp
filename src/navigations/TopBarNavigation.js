@@ -59,7 +59,7 @@ export function OrderTopBarNavigation() {
         ...(mode == 'Light'
         ? {
           tabBarIndicatorStyle: {
-            backgroundColor: Colors.PURPLE,
+            backgroundColor: Colors.HIGHLIGHT,
             height: 1,
           },
           tabBarStyle: {
@@ -68,7 +68,7 @@ export function OrderTopBarNavigation() {
             //paddingLeft: 10,
             elevation: 0,
           },
-          tabBarActiveTintColor: Colors.PURPLE,
+          tabBarActiveTintColor: Colors.HIGHLIGHT,
           tabBarInactiveTintColor: Colors.WHITE,
           tabBarPressColor: 'transparent',
         }

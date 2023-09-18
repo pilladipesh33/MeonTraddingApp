@@ -25,6 +25,7 @@ import ForgotPassword from '../screens/forgotPassword';
 import Settings from '../screens/settings';
 import {Provider as PaperProvider, MD3DarkTheme as PaperDarkTheme} from 'react-native-paper'
 import ChangeProfileDetails from '../screens/profile/ChangeProfileDetails';
+import OrderNotification from '../screens/settings/OrderNotification';
 
 const Stack = createStackNavigator();
 
@@ -43,8 +44,8 @@ export const Routes = () => {
   const {accessToken, validateOTPData} = useSelector(
     state => state.validateOTP,
   );
-  console.log('accessToken', storageToken);
-  console.log('validateOTPData', validateOTPData);
+  // console.log('accessToken', storageToken);
+  // console.log('validateOTPData', validateOTPData);
 
   return (
     <View style={{flex: 1}}>
@@ -76,6 +77,7 @@ export const Routes = () => {
               />
               <Stack.Screen name='Settings' component={Settings} />
               <Stack.Screen name='ChangeProfileDetails' component={ChangeProfileDetails} />
+              <Stack.Screen name='OrderNotification' component={OrderNotification} />
             </>
           ) : (
             <>

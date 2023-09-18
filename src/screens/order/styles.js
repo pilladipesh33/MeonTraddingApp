@@ -5,8 +5,10 @@ export const styles = StyleSheet.create({
     bodyContainer: {
       backgroundColor: Colors.WHITE,
       height: '100%',
-      borderTopRightRadius: 20,
-      borderTopLeftRadius: 20,
+    },
+    bodyContainerDark: {
+      backgroundColor: Colors.DARK,
+      height: '100%',
     },
     bodyContentContainer: {paddingLeft: 10, paddingRight: 10},
     searchBarContainer: {
@@ -18,6 +20,10 @@ export const styles = StyleSheet.create({
     searchBarText: {
       fontSize: 15,
       color: Colors.BLUE,
+    },
+    searchBarTextDark: {
+      fontSize: 15,
+      color: Colors.HIGHLIGHT,
     },
     androidSafeArea: {
         flex : 1,

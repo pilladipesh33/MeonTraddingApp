@@ -21,6 +21,7 @@ const Search = ({navigation}) => {
   const [watchListData, setWatchListData] = useState([]);
   const [searchwatchListData, setSearchWatchListData] = useState('');
   const [timer, setTimer] = useState(null);
+  const modes = useSelector((state) => state.theme.mode);
 
   useEffect(() => {
     if (searchwatchListData) {
@@ -29,7 +30,7 @@ const Search = ({navigation}) => {
       }
       const timeout = setTimeout(() => {
         if (searchwatchListData.length > 1) {
-          console.log('test2', searchwatchListData);
+          //console.log('test2', searchwatchListData);
           dispatch(searchStockData(searchwatchListData));
         }
       }, 500);
@@ -49,24 +50,25 @@ const Search = ({navigation}) => {
     }
   });
 
-  console.log('test1', watchListData);
+  //console.log('test1', watchListData);
   //sconsole.log('test2', watchListData.map())
   return (
-    <View style={styles.androidSafeArea}>
+    <View style={modes =='Light'?styles.androidSafeAreaDark:styles.androidSafeArea}>
       <View style={styles.searchBox}>
-        <TouchableOpacity onPress={() => navigation.navigate('Drawer')}>
+        <TouchableOpacity onPress={() => navigation.goBack()}>
           <AntDesign
             name="arrowleft"
             size={25}
-            color={Colors.MATT_BLACK}
+            color={modes == 'Light' ? Colors.WHITE: Colors.MATT_BLACK}
             style={{paddingLeft: 15}}
           />
         </TouchableOpacity>
         <TextInput
           placeholder="Search eg: INFY base, NIFY fut"
-          style={styles.textInputContainer}
+          style={modes == 'Light' ? styles.textInputContainerDark : styles.textInputContainer}
           onChangeText={searchMarketData}
           value={searchwatchListData}
+          placeholderTextColor={modes == 'Light' ? Colors.LIGHT_TEXT : Colors.GREY}
         />
       </View>
       {watchListData.length !== null || watchListData !== undefined ? (
@@ -85,15 +87,15 @@ const Search = ({navigation}) => {
                     style={{
                       height: 25,
                       width: 40,
-                      backgroundColor: Colors.LIGHT_GREEN,
+                      backgroundColor: modes == 'Light' ? Colors.BROWN : Colors.LIGHT_GREEN,
                     }}>
-                    <Text style={{color: Colors.GREEN, textAlign: 'center'}}>
+                    <Text style={{color: modes == 'Light' ? Colors.RED : Colors.GREEN, textAlign: 'center'}}>
                       {item?.Series}
                     </Text>
                   </View>
                   <View style={styles.contentContainer}>
-                    <Text style={styles.heading}>{item?.DisplayName}</Text>
-                    <Text style={styles.content}>{item?.CompanyName}</Text>
+                    <Text style={modes == 'Light' ? styles.headingDark : styles.heading}>{item?.DisplayName}</Text>
+                    <Text style={modes == 'Light' ? styles.contentDark : styles.content}>{item?.CompanyName}</Text>
                   </View>
                 </TouchableOpacity>
                 <View>

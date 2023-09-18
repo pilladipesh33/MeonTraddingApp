@@ -8,6 +8,11 @@ export const styles = StyleSheet.create({
     paddingTop: Platform.OS === 'android' ? StatusBar.currentHeight : 0,
     backgroundColor: Colors.WHITE,
   },
+  androidSafeAreaDark: {
+    flex: 1,
+    paddingTop: Platform.OS === 'android' ? StatusBar.currentHeight : 0,
+    backgroundColor: Colors.DARK,
+  },
   headerContainer: {
     flexDirection: 'row',
     justifyContent: 'flex-start',
@@ -47,7 +52,10 @@ export const styles = StyleSheet.create({
     color: Colors.GREY,
   },
   contentText: {
-    color: Colors.MATT_BLACK,
+    color: Colors.matt,
+  },
+  contentTextDark: {
+    color: Colors.WHITE,
   },
   priceText: {
     fontWeight: '700',
@@ -55,8 +63,18 @@ export const styles = StyleSheet.create({
     color: Colors.BLACK,
     textAlign: 'center'
   },
+  priceTextDark: {
+    fontWeight: '700',
+    fontSize: 18,
+    color: Colors.WHITE,
+    textAlign: 'center'
+  },
   priceContainer:{
-    paddingLeft: '10%'
+    // paddingLeft: '10%'
+    position: 'absolute',
+    top: '5%',
+    right: 0,
+    paddingRight: '5%'
   },
   dropdown2BtnStyle: {
     backgroundColor: Colors.WHITE,
@@ -75,4 +93,12 @@ export const styles = StyleSheet.create({
     color: Colors.BLACK,
     paddingRight: 10,
   },
+  loaderContainer: {
+    position: 'absolute', 
+    top: 0, left: 0, 
+    right: 0, bottom: 0, 
+    justifyContent: 'center', 
+    alignItems: 'center',
+    alignSelf: 'center'
+  }
 });

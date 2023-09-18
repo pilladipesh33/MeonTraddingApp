@@ -18,7 +18,7 @@ const OTPValidation = ({navigation, route}) => {
       dispatch(validateOTPUser(payload));
     }
   }, [payload]);
-  console.log('TOKEN', AsyncStorage.getItem('TOKEN'));
+  //console.log('TOKEN', AsyncStorage.getItem('TOKEN'));
   React.useEffect(() => {
     if (validateOTPData?.type == 'success') {
       // navigation.navigate('Profile')
@@ -33,7 +33,7 @@ const OTPValidation = ({navigation, route}) => {
         source: 'EnterpriseWeb',
       });
     }
-    console.log('validateOTPData', validateOTPData.type);
+    //console.log('validateOTPData', validateOTPData.type);
   };
   return (
     <View>

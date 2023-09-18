@@ -15,7 +15,12 @@ export const Colors = {
     LIGHT_GREEN: '#E9F5E9',
     DARK: '#1f2937',
     DARK_TEXT:'#fafafa',
-    PURPLE: '#BB86FC'
+    PURPLE: '#BB86FC',
+    DARK_LIGHT: '#2E4052',
+    LIGHT_TEXT: '#9B9BAF',
+    HIGHLIGHT: '#4184f3',
+    BROWN: '#70363B',
+    LIGHT_BROWN: '#BF4947',
 }
 
 export const darkColors = {

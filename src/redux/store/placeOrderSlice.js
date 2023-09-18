@@ -14,7 +14,7 @@ export const handlePlaceOrder = async (
   exchangeInstrumentID
 ) => {
   try {
-    console.log('exchangeInstrumentID', exchangeInstrumentID)
+    // console.log('exchangeInstrumentID', exchangeInstrumentID)
     const apiUrl = "https://itrade.investmentwallet.in:10121/enterprise/orders";
     const requestData = {
       clientID: '40151',
@@ -41,7 +41,7 @@ export const handlePlaceOrder = async (
     };
     const response = await fetch(apiUrl, requestOptions);
     const data = await response?.json();
-    console.log('reqdata', data);
+    // console.log('reqdata', data);
   
     if(data?.type == 'success'){
         AsyncStorage.setItem('ORDER_ID',JSON.stringify(data?.result?.AppOrderID))
@@ -49,7 +49,7 @@ export const handlePlaceOrder = async (
     }
   } catch (error) {
     if(data?.type == 'error'){
-    console.log('Error: ', data?.result?.error);
+    // console.log('Error: ', data?.result?.error);
     }
   }
 };
@@ -59,7 +59,7 @@ export const handlePlaceOrder = async (
 export const placeOrderItem = createAsyncThunk(
   "placeOrder/fetch",
   async (data, { rejectWithValue, serializeError, dispatch }) => {
-    console.log(data);
+    // console.log(data);
     try {
       const token = AsyncStorage.getItem('TOKEN');
       const response = await axios.post(

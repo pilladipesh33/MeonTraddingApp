@@ -17,6 +17,7 @@ import { getGroupSymbols } from '../../redux/store/getGroupSymbolSlice';
 import { getInstrumentsDetailsById, updateInstrumentData } from '../../redux/store/getInstrumentsDetailByIdSlice';
 import { subscriptionInstrumentsItem } from '../../redux/store/subscriptionsInstrumentsSlice';
 import { unsubscriptionInstrumentsItem } from '../../redux/store/unsubscriptionsInstrumentSlice';
+import Header from '../../components/Header';
 
 const GroupDetails = ({route, navigation}) => {
   const data = route?.params?.key;
@@ -24,6 +25,8 @@ const GroupDetails = ({route, navigation}) => {
   const [groupData, setGroupData] = useState([]);
   const [instruments, setInstruments] = useState([]);
   const [stockData, setStockData] = useState();
+  const [isShowData, setIsShowData] = useState('');
+  const mode = useSelector((state) => state.theme.mode);
 //   const [dataList, setDataList] = useState([]);
 //   const [highValue, setHighValue] = useState('');
   //DELETE API INTEGRATION
@@ -67,16 +70,12 @@ const GroupDetails = ({route, navigation}) => {
     }
   }, [instruments]);
 
-  const handleBackButton = () => {
-    navigation.navigate('Drawer');
-    setStockData('');
-  };
   //SOCKET CONNECTIONS
   const {socketData, socketDataStatus, joined} = useSelector(
     state => state.socketConnection,
   );
 
-  console.log('instruments', instruments)
+  // console.log('instruments', instruments)
 
   useEffect(() => {
     if (joined && instruments) {
@@ -87,32 +86,36 @@ const GroupDetails = ({route, navigation}) => {
         }),
       );
     }
-    return () => {
-      dispatch(
-        unsubscriptionInstrumentsItem({
-          instruments,
-          xtsMessageCode: 1502,
-        }),
-      );
-    };
   }, [joined]);
 
-  // console.log('previousValue', previousValue);
-  // console.log('currentValue', currentValue)
-  // console.log('socketData', socketData.ExchangeInstrumentID);
+  const handleBackButton = () => {
+    dispatch(
+      unsubscriptionInstrumentsItem({
+        instruments,
+        xtsMessageCode: 1502,
+      }),
+    );
+    console.log('unsub');
+    navigation.goBack();
+    setStockData('');
+  }
 
+  useEffect(() => {
+    if(socketData){
+      // console.log(socketData?.Touchline?.High);
+      setIsShowData({
+        High: socketData?.Touchline?.High,
+        Low: socketData?.Touchline?.Low,
+        ExchangeInstrumentID: socketData?.ExchangeInstrumentID,
+      })
+    }
+  },[socketData])
+
+  // console.log('socketData', socketData)
   return (
-    <View style={styles.androidSafeArea}>
-      <View style={styles.headerContainer}>
-        <TouchableOpacity onPress={handleBackButton}>
-          <Feather name="chevron-left" size={25} color={Colors.BLACK} />
-        </TouchableOpacity>
-        <View style={styles.columnContainer}>
-          <Text style={styles.headingText}>{data?.groupName}</Text>
-          <Text style={styles.subHeadingText}>{data?.exchangeSegment}</Text>
-        </View>
-      </View>
-      <View
+    <View style={mode == 'Light' ? styles.androidSafeAreaDark : styles.androidSafeArea}>
+      <Header title={data?.groupName} menu={false} onPress={() => handleBackButton()} />
+      {/* <View
         style={[
           styles.headerContainer,
           {
@@ -122,16 +125,15 @@ const GroupDetails = ({route, navigation}) => {
             paddingLeft: 10,
           },
         ]}>
-        <Text>Present in List</Text>
-        <TouchableOpacity style={{}} onPress={handleDeleteButton}>
-          <Feather name="trash-2" size={25} color={Colors.MATT_BLACK} />
-        </TouchableOpacity>
-      </View>
+         <TouchableOpacity style={{}} onPress={handleDeleteButton}>
+          <Feather name="trash-2" size={25} color={mode == 'Light' ? Colors.RED : Colors.BROWN} />
+        </TouchableOpacity> 
+      </View> */}
       <View style={{paddingTop: 10, flex: 1}}>
         <FlatList
           data={stockData?.result}
           keyExtractor={item => item?.exchangeInstrumentID}
-          extraData={socketData}
+          extraData={isShowData}
           renderItem={({item}) => (
             <View>
               <TouchableOpacity
@@ -139,12 +141,16 @@ const GroupDetails = ({route, navigation}) => {
                 onPress={() => navigation.navigate('BuySell', {key: item})}>
                 <View>
                   <View style={styles.columnContainer}>
-                    <Text style={styles.textContainer}>
+                    <Text style={mode == 'Light' ? styles.textContainerDark : styles.textContainer}>
                       {item?.TradingSymbol}
                     </Text>
-                    <Text style={styles.textContainer}>{item?.Name}</Text>
+                    <Text style={mode == 'Light' ? styles.textContainer2Dark : styles.textContainer}>{item?.Name}</Text>
                   </View>
-                  <View style={styles.columnContainer}>
+                  <View>
+                    {isShowData?.ExchangeInstrumentID == item?.exchangeInstrumentID}
+                    <Text>{isShowData?.High}</Text>
+                  </View>
+                   {/* <View style={styles.columnContainer}>
                     {item?.ExchangeInstrumentID ==
                     socketData?.ExchangeInstrumentID ? (
                       <Text
@@ -155,7 +161,7 @@ const GroupDetails = ({route, navigation}) => {
                       <View>
                         <Text
                           style={[styles.textContainer, {color: Colors.GREEN}]}>
-                          {item?.PriceBand?.High} {/* {previousValue} */}
+                          {item?.PriceBand?.High}
                         </Text>
                       </View>
                     )}
@@ -172,11 +178,8 @@ const GroupDetails = ({route, navigation}) => {
                         </Text>
                       </View>
                     )}
-                  </View>
-                </View>
-                {/* ) : (
-                    <View></View>
-                  )} */}
+                  </View> */}
+                </View> 
               </TouchableOpacity>
             </View>
           )}
@@ -194,6 +197,11 @@ const styles = StyleSheet.create({
     flex: 1,
     paddingTop: Platform.OS === 'android' ? StatusBar.currentHeight : 0,
     backgroundColor: Colors.WHITE,
+  },
+  androidSafeAreaDark: {
+    flex: 1,
+    paddingTop: Platform.OS === 'android' ? StatusBar.currentHeight : 0,
+    backgroundColor: Colors.DARK,
   },
   headerContainer: {
     flexDirection: 'row',
@@ -234,5 +242,16 @@ const styles = StyleSheet.create({
     fontSize: 15,
     fontWeight: '600',
     color: Colors.BLACK,
+  },
+  textContainerDark: {
+    fontSize: 15,
+    fontWeight: '600',
+    color: Colors.WHITE,
+  },
+  textContainer2Dark: {
+    fontSize: 15,
+    fontWeight: '600',
+    color: '#EDEBF5',
+    opacity: 0.6
   },
 });

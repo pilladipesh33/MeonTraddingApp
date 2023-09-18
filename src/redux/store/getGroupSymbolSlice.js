@@ -6,7 +6,7 @@ const { createSlice, createAsyncThunk } = require("@reduxjs/toolkit");
 export const getGroupSymbols = createAsyncThunk(
   "getGroupSymbols/fetch",
   async (data, { rejectWithValue, serializeError, dispatch }) => {
-    console.log(data);
+    // console.log(data);
     try {
         const token = await AsyncStorage.getItem('TOKEN');
         const userID = await AsyncStorage.getItem('USER_ID');

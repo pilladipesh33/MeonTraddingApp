@@ -19,7 +19,7 @@ export const searchStockData = createAsyncThunk(
           },
         },
       );
-      console.log("RESPONSE1" , response?.data)
+      // console.log("RESPONSE1" , response?.data)
    
       dispatch(setShowAlert(true));
       return response?.data;

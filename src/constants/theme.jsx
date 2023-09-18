@@ -26,3 +26,4 @@ const defaultColors = {
     '800': defaultColors[200],
     '900': defaultColors[100],
   };
+  

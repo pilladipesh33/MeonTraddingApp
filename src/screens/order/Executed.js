@@ -7,11 +7,12 @@ import { orderBookData } from '../../redux/store/orderBookSlice';
 import OrderContainer from './OrderContainer';
 
 const Executed = ({navigation, route}) => {
+  const mode = useSelector((state) => state.theme.mode);
   const [executedOrder, setExecutedOrder] = useState([]);
-  console.log('data', route?.param)
+  //console.log('data', route?.param)
   return (
     <View>
-      <View style={styles.bodyContainer}>
+      <View style={mode=='Light'? styles.bodyContainerDark : styles.bodyContainer}>
         <View style={styles.bodyContentContainer}>
           <OrderSearchBox />
           {/* Flatlist to show data */}

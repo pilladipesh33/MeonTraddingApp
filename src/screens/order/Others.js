@@ -6,11 +6,12 @@ import {styles} from './styles';
 import OrderSearchBox from '../../components/OrderSearchBox';
 
 const Others = () => {
+  const mode = useSelector((state) => state.theme.mode);
   const {orderData, orderDataStatus} = useSelector(state => state.orderBook);
-  console.log('orderData', orderData);
+  //console.log('orderData', orderData);
   return (
     <View>
-      <View style={styles.bodyContainer}>
+      <View style={mode=='Light'?styles.bodyContainerDark:styles.bodyContainer}>
         <View style={styles.bodyContentContainer}>
           <OrderSearchBox />
           <FlatList

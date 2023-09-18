@@ -9,7 +9,7 @@ export const subscriptionInstrumentsItem = createAsyncThunk(
   async (data, {rejectWithValue, serializeError, dispatch}) => {
     try {
         const token = await AsyncStorage.getItem('TOKEN');
-      console.log('data', data)
+      // console.log('data', data)
       const response = await axios.post(
         'https://itrade.investmentwallet.in:10121/marketdata/instruments/subscription',
         data,
@@ -22,7 +22,7 @@ export const subscriptionInstrumentsItem = createAsyncThunk(
       dispatch(setShowAlert(true));
 
       return response?.data;
-      console.log('RESPONSE2', response?.data)
+      // console.log('RESPONSE2', response?.data)
     } catch (error) {
       return rejectWithValue(serializeError(error));
     }

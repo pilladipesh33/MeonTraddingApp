@@ -22,7 +22,7 @@ const PlaceOrderScreen = ({navigation, route}) => {
   const name = route?.params?.name;
   const action = route?.params?.action;
   const item = route?.params?.items;
-  console.log('action', item?.ExchangeInstrumentID);
+  //console.log('action', item?.ExchangeInstrumentID);
 
   const [productType, setProductType] = useState('');
   const [orderType, setOrderType] = useState('');
@@ -43,14 +43,14 @@ const PlaceOrderScreen = ({navigation, route}) => {
   const OrderType = ['LIMIT', 'MARKET', 'SL-L', 'SL-M'];
   const Validity = ['DAY', 'IOC', 'EOS'];
 
-  console.log('test',productType, orderType, validity, quantity, disclosureQuantity, exchangeInstrumentID);
-console.log('payload', exchangeInstrumentID)
+//   console.log('test',productType, orderType, validity, quantity, disclosureQuantity, exchangeInstrumentID);
+// console.log('payload', exchangeInstrumentID)
 
     const onPressBuy = () => {
        handlePlaceOrder(productType,orderType,validity,quantity,disclosureQuantity, navigation, orderSide, exchangeInstrumentID)
     }
 
-    console.log('item', exchangeInstrumentID)
+    // console.log('item', exchangeInstrumentID)
   return (
     <View style={styles.androidSafeArea}>
       <View style={styles.headerContainer}>
@@ -85,7 +85,7 @@ console.log('payload', exchangeInstrumentID)
         <SelectDropdown //PRODUCT TYPE
           data={ProductType}
           onSelect={(selectedItem, index) => {
-            console.log(selectedItem, index);
+            // console.log(selectedItem, index);
             setProductType(selectedItem);
           }}
           defaultButtonText={'Product type'}
@@ -114,7 +114,7 @@ console.log('payload', exchangeInstrumentID)
         <SelectDropdown //ORDER TYPE
           data={OrderType}
           onSelect={(selectedItem, index) => {
-            console.log(selectedItem, index);
+            // console.log(selectedItem, index);
             setOrderType(selectedItem);
           }}
           defaultButtonText={'Order type'}
@@ -151,7 +151,7 @@ console.log('payload', exchangeInstrumentID)
         <SelectDropdown //VALIDITY
           data={Validity}
           onSelect={(selectedItem, index) => {
-            console.log(selectedItem, index);
+            //console.log(selectedItem, index);
             setValidity(selectedItem);
           }}
           defaultButtonText={'Validity'}

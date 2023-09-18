@@ -30,7 +30,7 @@ const WatchlistDataSection = ({navigation}) => {
     );
     hideModal();
   };
-  console.log('name', addedGroup);
+  //console.log('name', addedGroup);
   return (
     <View>
       <View style={mode == 'Light' ? styles.bodyContainerDark : styles.bodyContainer}>

@@ -8,6 +8,11 @@ export  const styles = StyleSheet.create({
       paddingTop: Platform.OS === 'android' ? StatusBar.currentHeight : 0,
       backgroundColor: Colors.WHITE,
     },
+    androidSafeAreaDark: {
+      flex: 1,
+      paddingTop: Platform.OS === 'android' ? StatusBar.currentHeight : 0,
+      backgroundColor: Colors.DARK,
+    },
     searchBox: {
       height: SCREEN_HEIGHT - WINDOW_HEIGHT,
       width: '100%',
@@ -20,6 +25,13 @@ export  const styles = StyleSheet.create({
       fontSize: 16,
       fontWeight: '500',
       color: Colors.GREY,
+    },
+    textInputContainerDark: {
+      paddingLeft: 20,
+      width: '100%',
+      fontSize: 16,
+      fontWeight: '500',
+      color: Colors.WHITE,
     },
     searchCard: {
       flexDirection: 'row',
@@ -41,9 +53,21 @@ export  const styles = StyleSheet.create({
       fontSize: 16,
       color: Colors.MATT_BLACK,
     },
+    headingDark: {
+      //paddingTop: 10,
+      padding: 10,
+      paddingBottom: 4,
+      fontSize: 16,
+      color: Colors.WHITE,
+    },
     content: {
       paddingLeft: 10,
       paddingBottom: 5,
+    },
+    contentDark: {
+      paddingLeft: 10,
+      paddingBottom: 5,
+      color: Colors.LIGHT_TEXT
     },
     cardContainer: {
       flexDirection: 'row',

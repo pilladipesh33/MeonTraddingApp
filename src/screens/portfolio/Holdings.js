@@ -16,7 +16,7 @@ const Holdings = () => {
   useEffect(() => {
     dispatch(holdingItem());
   }, []);
-  console.log('holdingData', holdingData);
+  //console.log('holdingData', holdingData);
   return (
     <View style={styles.bodyContainer}>
       <View style={[styles.boxContainer, styles.elevation]}>

@@ -9,7 +9,7 @@ export const userProfileData = createAsyncThunk(
     async({rejectWithValue, serializeError, dispatch}) => {
         try{
             const token = await AsyncStorage.getItem('TOKEN');
-            console.log('token', token)
+            //console.log('token', token)
             const response = await axios.get(
                 `https://itrade.investmentwallet.in:10121/enterprise/user/profile?clientID=40151&userID=40151`,
                 {
@@ -20,7 +20,7 @@ export const userProfileData = createAsyncThunk(
                 }
             );
             dispatch(setShowAlertForUserProfile(true));
-            console.log('response.data1', response.data)
+            //console.log('response.data1', response.data)
             return response?.data
         }catch(error){
             return rejectWithValue(serializeError(error))

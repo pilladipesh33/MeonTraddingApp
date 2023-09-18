@@ -19,7 +19,7 @@ const Profile = ({navigation}) => {
     try {
       await AsyncStorage.removeItem('TOKEN');
       dispatch(setAccessToken(null));
-      console.log('token', accessToken)
+      //console.log('token', accessToken)
     } catch (error) {
       console.error('Error logging out:', error);
     }
@@ -51,7 +51,7 @@ const Profile = ({navigation}) => {
     fetchUserDetails();
   }, []);
 
-  console.log('userProfile', userProfile);
+  //console.log('userProfile', userProfile);
 
   return (
     <ScrollView style={mode == 'Light' ? styles.androidSafeAreaDark : styles.androidSafeArea}>
@@ -135,16 +135,6 @@ const Profile = ({navigation}) => {
               {...mode == 'Light' ? {color: Colors.WHITE} : {color: Colors.GREY}}
             />
             <Text style={mode == 'Light' ? styles.headerDark : styles.header}>Logout</Text>
-          </TouchableOpacity>
-          <TouchableOpacity
-            onPress={() => navigation.navigate('Settings')}
-            style={styles.item}>
-            <MaterialIcons
-              name="settings"
-              size={24}
-              {...mode == 'Light' ? {color: Colors.WHITE} : {color: Colors.GREY}}
-            />
-            <Text style={mode == 'Light' ? styles.headerDark : styles.header}>Settings</Text>
           </TouchableOpacity>
         </View>
       </View>

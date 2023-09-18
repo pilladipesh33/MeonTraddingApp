@@ -17,6 +17,9 @@ import Foundation from 'react-native-vector-icons/Foundation';
 import Scanners from '../screens/scanners';
 import {useSelector} from 'react-redux';
 import FontAwesome from 'react-native-vector-icons/FontAwesome'
+import Settings from '../screens/settings';
+import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
+import SocketData from '../utils/socketData';
 
 const Drawer = createDrawerNavigator();
 
@@ -139,7 +142,36 @@ const DrawerNavigation = () => {
           ),
         }}
       />
+      <Drawer.Screen
+        name="Settings"
+        component={Settings}
+        options={{
+          headerTitle: '',
+          drawerIcon: ({focused}) => (
+            <MaterialIcons
+              name="settings"
+              size={25}
+              color={focused ? Colors.BLACK : Colors.GREY}
+            />
+          ),
+        }}
+      />
+      {/* <Drawer.Screen
+        name="socket"
+        component={SocketData}
+        options={{
+          headerTitle: '',
+          drawerIcon: ({focused}) => (
+            <MaterialIcons
+              name="settings"
+              size={25}
+              color={focused ? Colors.BLACK : Colors.GREY}
+            />
+          ),
+        }}
+      /> */}
     </Drawer.Navigator>
+    
   );
 };
 

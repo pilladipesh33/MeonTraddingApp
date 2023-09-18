@@ -49,7 +49,7 @@ const EquityAlert = () => {
           <SelectDropdown //PRODUCT TYPE
             data={ProductType}
             onSelect={(selectedItem, index) => {
-              console.log(selectedItem, index);
+              //console.log(selectedItem, index);
               setProductType(selectedItem);
             }}
             // defaultButtonText={'Alert if value is'}

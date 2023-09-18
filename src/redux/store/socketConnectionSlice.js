@@ -18,12 +18,12 @@ export const connectToSocket = () => async (dispatch, getState) => {
   });
 
   socket.on('connect', data => {
-    // console.log('Connected to socket');
+    console.log('Connected to socket');
   });
 
   socket.on('joined', data => {
     dispatch(setJoined(true));
-    // console.log(data);
+    console.log(data);
   });
 
   socket.on('1502-json-full', data => {
