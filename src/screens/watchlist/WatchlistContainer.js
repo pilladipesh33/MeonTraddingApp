@@ -25,6 +25,7 @@ const WatchlistContainer = ({navigation}) => {
 
   return (
     <FlatList
+      contentContainerStyle={{paddingBottom: '15%'}}
       data={groupList}
       keyExtractor={item => item?.groupName}
       renderItem={({item}) => (

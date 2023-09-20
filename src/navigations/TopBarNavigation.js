@@ -15,7 +15,6 @@ import {useSelector} from 'react-redux';
 
 const Tab = createMaterialTopTabNavigator();
 
-
 export function PortfolioTopBarNavigation() {
   return (
     <Tab.Navigator
@@ -52,50 +51,50 @@ export function PortfolioTopBarNavigation() {
 }
 
 export function OrderTopBarNavigation() {
-  const mode = useSelector((state) => state.theme.mode);
+  const mode = useSelector(state => state.theme.mode);
   return (
     <Tab.Navigator
       screenOptions={{
         ...(mode == 'Light'
-        ? {
-          tabBarIndicatorStyle: {
-            backgroundColor: Colors.HIGHLIGHT,
-            height: 1,
-          },
-          tabBarStyle: {
-            backgroundColor: Colors.DARK,
-            paddingTop: 15,
-            //paddingLeft: 10,
-            elevation: 0,
-          },
-          tabBarActiveTintColor: Colors.HIGHLIGHT,
-          tabBarInactiveTintColor: Colors.WHITE,
-          tabBarPressColor: 'transparent',
-        }
-        : {
-            tabBarIndicatorStyle: {
-              backgroundColor: Colors.BLUE,
-              height: 1,
-            },
-            tabBarStyle: {
-              backgroundColor: Colors.WHITE,
-              paddingTop: 15,
-              //paddingLeft: 10,
-              elevation: 0,
-            },
-            tabBarActiveTintColor: Colors.BLUE,
-            tabBarInactiveTintColor: Colors.MATT_BLACK,
-            tabBarPressColor: 'transparent',
-          }),
-      tabBarIndicatorContainerStyle: {
-        marginLeft: 15, //indicator for current screen
-        width: '80%',
-      },
-      tabBarLabelStyle: {
-        fontSize: 15,
-        textTransform: 'capitalize',
-        marginHorizontal: 0,
-      },
+          ? {
+              tabBarIndicatorStyle: {
+                backgroundColor: Colors.HIGHLIGHT,
+                height: 1,
+              },
+              tabBarStyle: {
+                backgroundColor: Colors.DARK,
+                paddingTop: 15,
+                //paddingLeft: 10,
+                elevation: 0,
+              },
+              tabBarActiveTintColor: Colors.HIGHLIGHT,
+              tabBarInactiveTintColor: Colors.WHITE,
+              tabBarPressColor: 'transparent',
+            }
+          : {
+              tabBarIndicatorStyle: {
+                backgroundColor: Colors.BLUE,
+                height: 1,
+              },
+              tabBarStyle: {
+                backgroundColor: Colors.WHITE,
+                paddingTop: 15,
+                //paddingLeft: 10,
+                elevation: 0,
+              },
+              tabBarActiveTintColor: Colors.BLUE,
+              tabBarInactiveTintColor: Colors.MATT_BLACK,
+              tabBarPressColor: 'transparent',
+            }),
+        tabBarIndicatorContainerStyle: {
+          marginLeft: 15, //indicator for current screen
+          width: '80%',
+        },
+        tabBarLabelStyle: {
+          fontSize: 15,
+          textTransform: 'capitalize',
+          marginHorizontal: 0,
+        },
       }}
       sceneContainerStyle={{backgroundColor: Colors.TRANSPARENT}}>
       <Tab.Screen name={'Open'} component={Open} />
@@ -106,26 +105,26 @@ export function OrderTopBarNavigation() {
 }
 
 export function ScannerTopBarNavigation() {
-  const mode = useSelector((state) => state.theme.mode)
+  const mode = useSelector(state => state.theme.mode);
   return (
     <Tab.Navigator
       screenOptions={{
         ...(mode == 'Light'
           ? {
-            tabBarIndicatorStyle: {
-              backgroundColor: Colors.PURPLE,
-              height: 1,
-            },
-            tabBarStyle: {
-              backgroundColor: Colors.DARK,
-              paddingTop: 15,
-              //paddingLeft: 10,
-              elevation: 0,
-            },
-            tabBarActiveTintColor: Colors.PURPLE,
-            tabBarInactiveTintColor: Colors.WHITE,
-            tabBarPressColor: 'transparent',
-          }
+              tabBarIndicatorStyle: {
+                backgroundColor: Colors.PURPLE,
+                height: 1,
+              },
+              tabBarStyle: {
+                backgroundColor: Colors.DARK,
+                paddingTop: 15,
+                //paddingLeft: 10,
+                elevation: 0,
+              },
+              tabBarActiveTintColor: Colors.PURPLE,
+              tabBarInactiveTintColor: Colors.WHITE,
+              tabBarPressColor: 'transparent',
+            }
           : {
               tabBarIndicatorStyle: {
                 backgroundColor: Colors.BLUE,
@@ -174,20 +173,20 @@ export function AlertTopBarNavigation() {
       screenOptions={{
         ...(mode == 'Light'
           ? {
-            tabBarIndicatorStyle: {
-              backgroundColor: Colors.PURPLE,
-              height: 1,
-            },
-            tabBarStyle: {
-              backgroundColor: Colors.DARK,
-              paddingTop: 15,
-              //paddingLeft: 10,
-              elevation: 0,
-            },
-            tabBarActiveTintColor: Colors.PURPLE,
-            tabBarInactiveTintColor: Colors.WHITE,
-            tabBarPressColor: 'transparent',
-          }
+              tabBarIndicatorStyle: {
+                backgroundColor: Colors.PURPLE,
+                height: 1,
+              },
+              tabBarStyle: {
+                backgroundColor: Colors.DARK,
+                paddingTop: 15,
+                //paddingLeft: 10,
+                elevation: 0,
+              },
+              tabBarActiveTintColor: Colors.PURPLE,
+              tabBarInactiveTintColor: Colors.WHITE,
+              tabBarPressColor: 'transparent',
+            }
           : {
               tabBarIndicatorStyle: {
                 backgroundColor: Colors.BLUE,
@@ -232,3 +231,4 @@ export function AlertTopBarNavigation() {
     </Tab.Navigator>
   );
 }
+

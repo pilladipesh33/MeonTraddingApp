@@ -1,4 +1,4 @@
-import {Text, View, TouchableOpacity, Linking} from 'react-native';
+import {Text, View, TouchableOpacity, Linking, ToastAndroid} from 'react-native';
 import React, {useState, useEffect} from 'react';
 import {styles} from './styles';
 import {TextInput, Button} from 'react-native-paper';
@@ -14,13 +14,25 @@ const Login = ({navigation, route}) => {
   const {userData} = useSelector(state => state.login);
   const key = route?.params?.key;
 
-  //console.log('key', key)
+  console.log('key', userData)
 
   useEffect(() => {
     if (payload) {
       dispatch(loginUser(payload, navigation));
+      // navigation.navigate('OTP')
     }
   }, [payload]);
+
+  useEffect(() => {
+    if(userData?.type == 'success'){
+    ToastAndroid.showWithGravity(
+      `${userData?.description}`,
+      ToastAndroid.SHORT,
+      ToastAndroid.CENTER,
+    );
+    navigation.navigate('OTP');
+  }
+  },[userData])
 
   const handleLogin = () => {
     if (userID && password) {
@@ -28,7 +40,6 @@ const Login = ({navigation, route}) => {
         userID: userID,
         password: password,
       });
-      navigation.navigate('OTP');
     } else {
       alert('Enter details');
     }
@@ -65,6 +76,11 @@ const Login = ({navigation, route}) => {
           }}>
           Create new account
         </Text>
+      </View>
+      <View style={{alignSelf: 'flex-end'}}>
+        <Button onPress={() => navigation.navigate('UnblockUser')}>
+          <Text>Unblock User</Text>
+        </Button>
       </View>
       <View style={styles.buttonContainer}>
         <Button mode="contained" onPress={handleLogin}>

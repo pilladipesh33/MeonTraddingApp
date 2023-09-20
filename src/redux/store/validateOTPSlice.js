@@ -17,7 +17,7 @@ export const validateOTPUser = createAsyncThunk(
                 AsyncStorage.setItem('TOKEN', response?.data?.result?.token)
             }
             dispatch(setAccessToken(response?.data?.result?.token))
-            //console.log('response.data', response.data?.result?.token)
+            console.log('response.data', response.data?.result?.token)
             return response?.data;
         }catch(error) {
             return rejectWithValue(serializeError(error))

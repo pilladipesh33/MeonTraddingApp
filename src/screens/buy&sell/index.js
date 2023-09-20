@@ -20,6 +20,7 @@ import {subscriptionInstrumentsItem} from '../../redux/store/subscriptionsInstru
 import {unsubscriptionInstrumentsItem} from '../../redux/store/unsubscriptionsInstrumentSlice';
 import {styles} from './styles';
 import {ActivityIndicator, MD2Colors} from 'react-native-paper';
+import Ionicons from 'react-native-vector-icons/Ionicons';
 
 const BuySellScreen = ({navigation, route}) => {
   const items = route?.params?.key;
@@ -40,11 +41,14 @@ const BuySellScreen = ({navigation, route}) => {
 
   console.log('instruments', instruments);
 
-  useEffect(() => {
-    setTimeout(() => {
-      setIsLoading(false);
-    }, 2000);
-  }, []);
+  // useEffect(() => {
+  //   // setTimeout(() => {
+  //   //   setIsLoading(false);
+  //   // }, 2000);
+  //   if(socketData) {
+  //     setIsLoading(true);
+  //   }
+  // }, [socketData]);
 
   //Socket Connnec
   const dispatch = useDispatch();
@@ -57,6 +61,8 @@ const BuySellScreen = ({navigation, route}) => {
       setInstruments([{exchangeInstrumentID, exchangeSegment}]);
     }
   }, [exchangeInstrumentID, exchangeSegment, items]);
+
+  console.log('exchangeInstrumentsID', exchangeInstrumentID);
 
   useEffect(() => {
     if (joined && instruments) {
@@ -83,8 +89,8 @@ const BuySellScreen = ({navigation, route}) => {
     }
   }, [socketData]);
 
-  console.log('socketPrice', socketData?.Touchline?.BidInfo?.Price);
-  console.log('isPrice', isPrice, isLow, isLow);
+  // console.log('socketPrice', socketData);
+  // console.log('isPrice', isPrice, isLow, isLow);
   const mode = useSelector(state => state.theme.mode);
 
   const handleBackButton = () => {
@@ -103,7 +109,7 @@ const BuySellScreen = ({navigation, route}) => {
       style={
         mode == 'Light' ? styles.androidSafeAreaDark : styles.androidSafeArea
       }>
-      {isLoading ? (
+      {/* {isLoading ? (
         <View style={styles.loaderContainer}>
           <ActivityIndicator
             animating={true}
@@ -112,204 +118,212 @@ const BuySellScreen = ({navigation, route}) => {
           />
         </View>
       ) : (
-        <>
-          <View style={styles.headerContainer}>
-            <TouchableOpacity onPress={() => handleBackButton()}>
-              <Feather
-                name="chevron-left"
-                size={25}
-                color={mode == 'Light' ? Colors.WHITE : Colors.BLACK}
-              />
-            </TouchableOpacity>
-            <View style={{flexDirection: 'column', alignItems: 'flex-start'}}>
-              <Text
-                style={{
-                  paddingLeft: 15,
-                  fontWeight: '600',
-                  fontSize: 17,
-                  color: mode == 'Light' ? Colors.WHITE : Colors.BLACK,
-                }}>
-                {items?.DisplayName}
-              </Text>
-              <View style={{flexDirection: 'row'}}>
-                <Text
-                  style={{
-                    paddingLeft: 15,
-                    color: mode == 'Light' ? Colors.WHITE : Colors.BLACK,
-                  }}>
-                  {items?.CompanyName}
-                </Text>
-                <Text style={{paddingLeft: 15, color: Colors.GREEN}}>
-                  {stockDetails
-                    ? `${stockDetails.High}`
-                    : `${socketData?.Touchline?.High}`}
-                </Text>
-                <Text style={{paddingLeft: 15, color: Colors.RED}}>
-                  {stockDetails
-                    ? `${stockDetails.Low}`
-                    : `${socketData?.Touchline?.Low}`}
-                </Text>
-              </View>
-            </View>
-          </View>
-          <View style={styles.priceContainer}>
+        <> */}
+      <View style={styles.headerContainer}>
+        <TouchableOpacity onPress={() => handleBackButton()}>
+          <Feather
+            name="chevron-left"
+            size={25}
+            color={mode == 'Light' ? Colors.WHITE : Colors.BLACK}
+          />
+        </TouchableOpacity>
+        <View style={{flexDirection: 'column', alignItems: 'flex-start'}}>
+          <Text
+            style={{
+              paddingLeft: 15,
+              fontWeight: '600',
+              fontSize: 17,
+              color: mode == 'Light' ? Colors.WHITE : Colors.BLACK,
+            }}>
+            {items?.DisplayName}
+          </Text>
+          <View style={{flexDirection: 'row'}}>
             <Text
-              style={mode == 'Light' ? styles.priceTextDark : styles.priceText}>
-              ₹ {stockDetails.Price}
-              {/* ? `${socketData?.Touchline?.BidInfo?.Price}`
+              style={{
+                paddingLeft: 15,
+                color: mode == 'Light' ? Colors.WHITE : Colors.BLACK,
+              }}>
+              {items?.CompanyName}
+            </Text>
+            <Text style={{paddingLeft: 15, color: Colors.GREEN}}>
+              {stockDetails
+                ? `${stockDetails.High}`
+                : `${items.PriceBand.High}`}
+            </Text>
+            <Text style={{paddingLeft: 15, color: Colors.RED}}>
+              {stockDetails ? `${stockDetails.Low}` : `${items.PriceBand.Low}`}
+            </Text>
+          </View>
+        </View>
+      </View>
+      <View style={styles.priceContainer}>
+        <Text style={mode == 'Light' ? styles.priceTextDark : styles.priceText}>
+          ₹{' '}
+          {stockDetails
+            ? `${stockDetails.Price}`
+            : `${items.ExchangeInstrumentID}`}
+          {/* ? `${socketData?.Touchline?.BidInfo?.Price}`
                ? `${isPrice}`
                : `${items?.PriceBand?.Low}`} */}
-            </Text>
-          </View>
-          <View
-            style={{
-              flexDirection: 'row',
-              justifyContent: 'space-between',
-              padding: 10,
-            }}>
-            <Button
-              buttonColor={Colors.BLUE}
-              title={'BUY'}
-              titleColor={Colors.WHITE}
-              buttonStyle={styles.buttonContainer}
-              textStyle={styles.buttonText}
-              onPress={() =>
-                navigation.navigate('PlaceOrder', {
-                  socketData: socketData,
-                  action: 'BUY',
-                  name: items?.DisplayName,
-                  items: items,
-                })
-              }
-            />
-            <Button
-              buttonColor={Colors.RED}
-              title={'SELL'}
-              titleColor={Colors.WHITE}
-              buttonStyle={styles.buttonContainer}
-              textStyle={styles.buttonText}
-              onPress={() =>
-                navigation.navigate('PlaceOrder', {
-                  key: socketData,
-                  action: 'SELL',
-                })
-              }
-            />
-          </View>
-          <TouchableOpacity
-            style={{
-              flexDirection: 'row',
-              alignItems: 'center',
-              justifyContent: 'center',
-              padding: 10,
-              paddingBottom: 10,
-            }}
-            onPress={() => navigation.navigate('Charts')}>
-            <Feather name="bar-chart-2" size={20} color={Colors.BLUE} />
+        </Text>
+      </View>
+      <View
+        style={{
+          flexDirection: 'row',
+          justifyContent: 'space-between',
+          padding: 10,
+        }}>
+        <Button
+          buttonColor={Colors.BLUE}
+          title={'BUY'}
+          titleColor={Colors.WHITE}
+          buttonStyle={styles.buttonContainer}
+          textStyle={styles.buttonText}
+          onPress={() =>
+            navigation.navigate('PlaceOrder', {
+              socketData: socketData,
+              action: 'BUY',
+              name: items?.DisplayName,
+              items: items,
+              details: stockDetails,
+            })
+          }
+        />
+        <Button
+          buttonColor={Colors.RED}
+          title={'SELL'}
+          titleColor={Colors.WHITE}
+          buttonStyle={styles.buttonContainer}
+          textStyle={styles.buttonText}
+          onPress={() =>
+            navigation.navigate('PlaceOrder', {
+              socketData: socketData,
+              action: 'SELL',
+              name: items?.DisplayName,
+              items: items,
+              details: stockDetails,
+            })
+          }
+        />
+      </View>
+      <TouchableOpacity
+        style={{
+          flexDirection: 'row',
+          alignItems: 'center',
+          justifyContent: 'center',
+          padding: 10,
+          paddingBottom: 10,
+        }}
+        onPress={() => navigation.navigate('Charts')}>
+        <Feather name="bar-chart-2" size={20} color={Colors.BLUE} />
+        <Text style={{paddingLeft: 10, paddingRight: 10, color: Colors.BLUE}}>
+          View chart
+        </Text>
+        <Feather name="arrow-right" size={20} color={Colors.BLUE} />
+      </TouchableOpacity>
+      <View style={styles.rowContainer}>
+        <View
+          style={{
+            flexDirection: 'row',
+            justifyContent: 'flex-start',
+            alignItems: 'center',
+          }}>
+          <Feather name="bell" color={Colors.BLACK} size={24} />
+          <Text style={{paddingLeft: 10}}>Create Alert</Text>
+        </View>
+        <TouchableOpacity
+        onPress={() => navigation.navigate('GTT', {item: items, price: stockDetails?.Price})}
+          style={{
+            flexDirection: 'row',
+            justifyContent: 'flex-start',
+            alignItems: 'center',
+          }}>
+          <Ionicons name="arrow-redo-outline" color={Colors.BLUE} size={24} />
+          <Text style={{paddingLeft: 10}}>Create GTT</Text>
+        </TouchableOpacity>
+      </View>
+      {items?.Bhavcopy ? (
+        <View style={styles.rowContainer}>
+          <View style={styles.columnContainer}>
+            <Text style={styles.headingText}>Open</Text>
             <Text
-              style={{paddingLeft: 10, paddingRight: 10, color: Colors.BLUE}}>
-              View chart
+              style={
+                mode == 'Light' ? styles.contentTextDark : styles.contentText
+              }>
+              {items?.Bhavcopy?.Open}
             </Text>
-            <Feather name="arrow-right" size={20} color={Colors.BLUE} />
-          </TouchableOpacity>
-          {items?.Bhavcopy ? (
-            <View style={styles.rowContainer}>
-              <View style={styles.columnContainer}>
-                <Text style={styles.headingText}>Open</Text>
-                <Text
-                  style={
-                    mode == 'Light'
-                      ? styles.contentTextDark
-                      : styles.contentText
-                  }>
-                  {items?.Bhavcopy?.Open}
-                </Text>
-              </View>
-              <View style={styles.columnContainer}>
-                <Text style={styles.headingText}>High</Text>
-                <Text
-                  style={
-                    mode == 'Light'
-                      ? styles.contentTextDark
-                      : styles.contentText
-                  }>
-                  {items?.Bhavcopy?.High}
-                </Text>
-              </View>
-              <View style={styles.columnContainer}>
-                <Text style={styles.headingText}>Low</Text>
-                <Text
-                  style={
-                    mode == 'Light'
-                      ? styles.contentTextDark
-                      : styles.contentText
-                  }>
-                  {items?.Bhavcopy?.Low}
-                </Text>
-              </View>
-              <View style={styles.columnContainer}>
-                <Text style={styles.headingText}>Prev. close</Text>
-                <Text
-                  style={
-                    mode == 'Light'
-                      ? styles.contentTextDark
-                      : styles.contentText
-                  }>
-                  {items?.Bhavcopy?.Close}
-                </Text>
-              </View>
-            </View>
-          ) : (
-            <View style={styles.rowContainer}>
-              <View style={styles.columnContainer}>
-                <Text style={styles.headingText}>Open</Text>
-                <Text
-                  style={
-                    mode == 'Light'
-                      ? styles.contentTextDark
-                      : styles.contentText
-                  }>
-                  {socketData?.Touchline?.Open}
-                </Text>
-              </View>
-              <View style={styles.columnContainer}>
-                <Text style={styles.headingText}>High</Text>
-                <Text
-                  style={
-                    mode == 'Light'
-                      ? styles.contentTextDark
-                      : styles.contentText
-                  }>
-                  {socketData?.Touchline?.High}
-                </Text>
-              </View>
-              <View style={styles.columnContainer}>
-                <Text style={styles.headingText}>Low</Text>
-                <Text
-                  style={
-                    mode == 'Light'
-                      ? styles.contentTextDark
-                      : styles.contentText
-                  }>
-                  {socketData?.Touchline?.Low}
-                </Text>
-              </View>
-              <View style={styles.columnContainer}>
-                <Text style={styles.headingText}>Prev. close</Text>
-                <Text
-                  style={
-                    mode == 'Light'
-                      ? styles.contentTextDark
-                      : styles.contentText
-                  }>
-                  {socketData?.Touchline?.LastTradedPrice}
-                </Text>
-              </View>
-            </View>
-          )}
-          <View></View>
-        </>
+          </View>
+          <View style={styles.columnContainer}>
+            <Text style={styles.headingText}>High</Text>
+            <Text
+              style={
+                mode == 'Light' ? styles.contentTextDark : styles.contentText
+              }>
+              {items?.Bhavcopy?.High}
+            </Text>
+          </View>
+          <View style={styles.columnContainer}>
+            <Text style={styles.headingText}>Low</Text>
+            <Text
+              style={
+                mode == 'Light' ? styles.contentTextDark : styles.contentText
+              }>
+              {items?.Bhavcopy?.Low}
+            </Text>
+          </View>
+          <View style={styles.columnContainer}>
+            <Text style={styles.headingText}>Prev. close</Text>
+            <Text
+              style={
+                mode == 'Light' ? styles.contentTextDark : styles.contentText
+              }>
+              {items?.Bhavcopy?.Close}
+            </Text>
+          </View>
+        </View>
+      ) : (
+        <View style={styles.rowContainer}>
+          <View style={styles.columnContainer}>
+            <Text style={styles.headingText}>Open</Text>
+            <Text
+              style={
+                mode == 'Light' ? styles.contentTextDark : styles.contentText
+              }>
+              {socketData?.Touchline?.Open}
+            </Text>
+          </View>
+          <View style={styles.columnContainer}>
+            <Text style={styles.headingText}>High</Text>
+            <Text
+              style={
+                mode == 'Light' ? styles.contentTextDark : styles.contentText
+              }>
+              {socketData?.Touchline?.High}
+            </Text>
+          </View>
+          <View style={styles.columnContainer}>
+            <Text style={styles.headingText}>Low</Text>
+            <Text
+              style={
+                mode == 'Light' ? styles.contentTextDark : styles.contentText
+              }>
+              {socketData?.Touchline?.Low}
+            </Text>
+          </View>
+          <View style={styles.columnContainer}>
+            <Text style={styles.headingText}>Prev. close</Text>
+            <Text
+              style={
+                mode == 'Light' ? styles.contentTextDark : styles.contentText
+              }>
+              {socketData?.Touchline?.LastTradedPrice}
+            </Text>
+          </View>
+        </View>
       )}
+      <View></View>
+      {/* </>
+      )} */}
     </View>
   );
 };

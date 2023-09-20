@@ -19,11 +19,14 @@ const Profile = ({navigation}) => {
     try {
       await AsyncStorage.removeItem('TOKEN');
       dispatch(setAccessToken(null));
+      navigation.goBack()
       //console.log('token', accessToken)
     } catch (error) {
       console.error('Error logging out:', error);
     }
   };
+
+  console.log(accessToken);
 
   const fetchUserDetails = async () => {
     const token = await AsyncStorage.getItem('TOKEN');

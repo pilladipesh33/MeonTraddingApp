@@ -3,17 +3,17 @@ import { STATUSES } from "./apiStatus";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 const { createSlice, createAsyncThunk } = require("@reduxjs/toolkit");
 
-export const placeOrderItem = createAsyncThunk(
-  "placeOrder/fetch",
+export const placeGTTOrderItem = createAsyncThunk(
+  "placeGttOrder/fetch",
   async (data, { rejectWithValue, serializeError, dispatch }) => {
-    console.log(data);
     try {
       const token = await AsyncStorage.getItem('TOKEN');
       const response = await axios.post(
-        "https://itrade.investmentwallet.in:10121/enterprise/orders",
+        `https://itrade.investmentwallet.in:10121/enterprise/orders/gttorder`,
         data,
         {
           headers: {
+            "Content-Type": "Application.json",
             Authorization: ` ${token}`,
           },
         }
@@ -31,11 +31,11 @@ export const placeOrderItem = createAsyncThunk(
   }
 );
 
-const placeOrderSlice = createSlice({
-  name: "placeOrder",
+const placeGTTOrderSlice = createSlice({
+  name: "placeGttOrder",
   initialState: {
-    orderData: {},
-    orderDataStatus: "idle",
+    gttOrderData: {},
+    gttOrderDataStatus: "idle",
     error: null,
     showAlert: false,
   },
@@ -49,18 +49,18 @@ const placeOrderSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
-      .addCase(placeOrderItem.pending, (state, action) => {
-        state.orderDataStatus = STATUSES.LOADING;
+      .addCase(placeGTTOrderItem.pending, (state, action) => {
+        state.gttOrderDataStatus = STATUSES.LOADING;
       })
-      .addCase(placeOrderItem.fulfilled, (state, action) => {
-        state.orderData = action.payload;
-        state.orderDataStatus = STATUSES.IDLE;
+      .addCase(placeGTTOrderItem.fulfilled, (state, action) => {
+        state.gttOrderData = action.payload;
+        state.gttOrderDataStatus = STATUSES.IDLE;
       })
-      .addCase(placeOrderItem.rejected, (state, action) => {
-        state.orderDataStatus = STATUSES.ERROR;
+      .addCase(placeGTTOrderItem.rejected, (state, action) => {
+        state.gttOrderDataStatus = STATUSES.ERROR;
       });
   },
 });
 
-export default placeOrderSlice.reducer;
-export const { updateCreditStatus, setShowAlert } = placeOrderSlice.actions;
+export default placeGTTOrderSlice.reducer;
+export const { updateCreditStatus, setShowAlert } = placeGTTOrderSlice.actions;

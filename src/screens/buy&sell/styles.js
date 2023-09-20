@@ -100,5 +100,15 @@ export const styles = StyleSheet.create({
     justifyContent: 'center', 
     alignItems: 'center',
     alignSelf: 'center'
+  },
+  boxContainerDark: {
+
+  },
+  boxContainer: {
+    width: '90%',
+    backgroundColor: Colors.WHITE,
+    height: SCREEN_HEIGHT - WINDOW_HEIGHT,
+  },
+  dropdown1DropdownStyle: {
   }
 });

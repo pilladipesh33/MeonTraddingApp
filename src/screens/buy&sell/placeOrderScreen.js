@@ -1,86 +1,127 @@
-import {
-  Platform,
-  StatusBar,
-  StyleSheet,
-  Text,
-  View,
-  TouchableOpacity,
-} from 'react-native';
-import React, {useState, useEffect} from 'react';
-import SelectDropdown from 'react-native-select-dropdown';
-import Feather from 'react-native-vector-icons/Feather';
-import FontAwesome from 'react-native-vector-icons/FontAwesome';
-import {TextInput} from 'react-native-paper';
-import {Colors} from '../../constants/color';
-import Button from '../../components/Button';
+import {View, Text} from 'react-native';
+import React, {useEffect, useState} from 'react';
 import {styles} from './styles';
 import {useDispatch, useSelector} from 'react-redux';
 import {handlePlaceOrder, placeOrderItem} from '../../redux/store/placeOrderSlice';
+import {PlaceOrderTopBarNavigation} from '../../navigations/TopBarNavigation';
+import Header from '../../components/Header';
+import SelectDropdown from 'react-native-select-dropdown';
+import {TextInput} from 'react-native-paper';
+import FontAwesome from 'react-native-vector-icons/FontAwesome';
+import {Colors} from '../../constants/color';
+import Button from '../../components/Button';
+import { CheckBox, Icon } from '@rneui/themed';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const PlaceOrderScreen = ({navigation, route}) => {
   const socketData = route?.params?.items;
   const name = route?.params?.name;
   const action = route?.params?.action;
   const item = route?.params?.items;
+  const stockDetails = route?.params?.details;
   //console.log('action', item?.ExchangeInstrumentID);
+  const ProductType = ['CNC', 'MIS', 'NRML', 'BO', 'CO'];
+  const OrderType = ['LIMIT', 'MARKET', 'SL-L', 'SL-M'];
+  const Validity = ['DAY', 'IOC', 'EOS'];
 
+  const [payload, setPayload] = useState('');
+  const [isAMO, setIsAMO] = useState(false);
   const [productType, setProductType] = useState('');
   const [orderType, setOrderType] = useState('');
   const [validity, setValidity] = useState();
   const [quantity, setQuantity] = useState();
   const [disclosureQuantity, setDisclosureQuantity] = useState();
   const [orderSide, setOrderSide] = useState(action);
-  const [exchangeInstrumentID, setExchangeInstrumentId] = useState(item?.ExchangeInstrumentID);
+  const [exchangeInstrumentID, setExchangeInstrumentId] = useState(
+    item?.ExchangeInstrumentID,
+  );
+  // console.log('exchangeInstrumentID', exchangeInstrumentID)
   const dispatch = useDispatch();
-  const {orderData} = useSelector(state => state.placeOrder)
-//   const onPressPlaceOrder = () => {
-//     dispatch(placeOrderItem(payload));
-//     // navigation.navigate('BottomTab');
-//     console.log('orderData', orderData)
-//   };
+  const {orderData} = useSelector(state => state.placeOrder);
+  const mode = useSelector(state => state.theme.mode);
 
-  const ProductType = ['NRML', 'BO', 'CO', 'CNC', 'MIS'];
-  const OrderType = ['LIMIT', 'MARKET', 'SL-L', 'SL-M'];
-  const Validity = ['DAY', 'IOC', 'EOS'];
+  // const onPressBuy = () => {
+  //   handlePlaceOrder(
+  //     productType,
+  //     orderType,
+  //     validity,
+  //     quantity,
+  //     disclosureQuantity,
+  //     navigation,
+  //     orderSide,
+  //     exchangeInstrumentID,
+  //     isAMO
+  //   );
+  // };
 
-//   console.log('test',productType, orderType, validity, quantity, disclosureQuantity, exchangeInstrumentID);
-// console.log('payload', exchangeInstrumentID)
+  const handleConfirm = async () => {
+    setPayload({
+      clientID: await AsyncStorage.getItem("USER_ID"),
+      // exchangeSegment: ExchangeSegment === 1 ? "NSECM" : "BSECM",
+      exchangeSegment: 'NSECM',
+      exchangeInstrumentID: exchangeInstrumentID,
+      productType: productType,
+      orderType: orderType,
+      orderSide: orderSide,
+      timeInForce: validity,
+      isAMO: isAMO,
+      disclosedQuantity: disclosureQuantity,
+      orderQuantity: quantity,
+      limitPrice: stockDetails?.Price,
+      stopPrice: 0,
+      userID: await AsyncStorage.getItem("USER_ID"),
+    })
+  }
 
-    const onPressBuy = () => {
-       handlePlaceOrder(productType,orderType,validity,quantity,disclosureQuantity, navigation, orderSide, exchangeInstrumentID)
+  useEffect(() => {
+    if(payload && payload.orderQuantity > 0) {
+      dispatch(placeOrderItem(payload))
     }
+  },[payload]);
 
-    // console.log('item', exchangeInstrumentID)
+  useEffect(() => {
+    if(orderData?.type == 'success'){
+      navigation.goBack();
+    }
+  },[])
+
+  console.log('payload', orderData)
+
   return (
-    <View style={styles.androidSafeArea}>
-      <View style={styles.headerContainer}>
-        <TouchableOpacity onPress={() => navigation.navigate('BottomTab')}>
-          <Feather name="chevron-left" size={25} color={Colors.BLACK} />
-        </TouchableOpacity>
-        <View style={{flexDirection: 'column', alignItems: 'flex-start'}}>
-          <Text
-            style={{
-              paddingLeft: 15,
-              fontWeight: '600',
-              fontSize: 17,
-              color: Colors.BLACK,
-            }}>
-            {name}
-          </Text>
-          <View style={{flexDirection: 'row'}}>
-            <Text style={{paddingLeft: 15, color: Colors.BLACK}}>
-            ₹ {socketData ? (`${socketData?.Touchline?.BidInfo?.Price}`) : (`${item?.PriceBand?.High}`)}
-            
-            </Text>
-            <Text style={{paddingLeft: 15, color: Colors.GREEN}}>
-              {item?.Touchline?.High}
-            </Text>
-            <Text style={{paddingLeft: 15, color: Colors.BLACK}}>
-              {item?.key?.increment}
-            </Text>
-          </View>
-        </View>
-      </View>
+    <View
+      style={
+        mode == 'Light' ? styles.androidSafeAreaDark : styles.androidSafeArea
+      }>
+      <Header
+        title={name}
+        onPress={() => navigation.goBack()}
+        subContent={stockDetails?.Price}
+      />
+      <CheckBox
+      right
+      title={'AMO'}
+      textStyle={{fontSize: 20, fontWeight: '500', color: Colors.MATT_BLACK}}
+      checkedIcon={
+        <Icon
+          name="radio-button-checked"
+          type="material"
+          color="blue"
+          size={25}
+          iconStyle={{ marginRight: 10 }}
+        />
+      }
+      uncheckedIcon={
+        <Icon
+          name="radio-button-unchecked"
+          type="material"
+          color="grey"
+          size={25}
+          iconStyle={{ marginRight: 10 }}
+        />
+      }
+      checked={isAMO}
+      onPress={() => setIsAMO(!isAMO)}
+    />
       <View style={styles.rowContainer2}>
         <SelectDropdown //PRODUCT TYPE
           data={ProductType}
@@ -108,8 +149,6 @@ const PlaceOrderScreen = ({navigation, route}) => {
           }}
           dropdownIconPosition={'right'}
           dropdownStyle={styles.dropdown1DropdownStyle}
-          rowStyle={styles.dropdown1RowStyle}
-          rowTextStyle={styles.dropdown1RowTxtStyle}
         />
         <SelectDropdown //ORDER TYPE
           data={OrderType}
@@ -207,7 +246,7 @@ const PlaceOrderScreen = ({navigation, route}) => {
       <View>
         <Button
           title={`${action}`}
-          onPress={() => onPressBuy()}
+          onPress={() => handleConfirm()}
           buttonStyle={{}}
           buttonColor={action == 'SELL' ? Colors.RED : Colors.BLUE}
         />

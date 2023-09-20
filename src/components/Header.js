@@ -5,7 +5,7 @@ import Feather from 'react-native-vector-icons/Feather';
 import {Colors} from '../constants/color';
 import {useSelector} from 'react-redux';
 
-const Header = ({title, onPress, screenName, navigation, menu}) => {
+const Header = ({title, onPress, screenName, navigation, menu, subContent}) => {
   const mode = useSelector(state => state.theme.mode);
   return (
     <View
@@ -27,9 +27,19 @@ const Header = ({title, onPress, screenName, navigation, menu}) => {
           />
         )}
       </TouchableOpacity>
-      <Text style={mode == 'Light' ? styles.headerTextDark : styles.headerText}>
-        {title}
-      </Text>
+      <View style={{flexDirection: 'column', justifyContent: 'center', alignItems: 'flex-start'}}>
+        <Text
+          style={mode == 'Light' ? styles.headerTextDark : styles.headerText}>
+          {title}
+        </Text>
+        {subContent ? (
+          <Text style={mode == 'Light' ? styles.subTextDark : styles.subText}>
+            ₹ {subContent}
+          </Text>
+        ) : (
+          <View />
+        )}
+      </View>
     </View>
   );
 };
@@ -67,4 +77,12 @@ const styles = StyleSheet.create({
     color: Colors.DARK_TEXT,
     paddingLeft: '5%',
   },
+  subText: {
+    paddingLeft: '5%',
+    color: Colors.MATT_BLACK
+  },
+  subTextDark: {
+    paddingLeft: '5%',
+    color: Colors.DARK_TEXT
+  }
 });

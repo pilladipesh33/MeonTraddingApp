@@ -16,8 +16,8 @@ export const loginUser = createAsyncThunk(
             dispatch(setShowAlert(true))
             if(response?.data?.type == 'success'){
                 AsyncStorage.setItem('USER_ID', response?.data?.result?.userID)
-                // console.log('login', response.data)
-                navigation.navigate('OTP')
+                console.log('login', response.data)
+                // navigation.navigate('OTP')
             }
             return response?.data
         }catch(error){

@@ -28,7 +28,7 @@ const OTPValidation = ({navigation, route}) => {
   const handleVerifyOtp = () => {
     if (pin) {
       setPayload({
-        userID: `${40151}`,
+        userID: `${userData?.result?.userID}`,
         pin: pin,
         source: 'EnterpriseWeb',
       });

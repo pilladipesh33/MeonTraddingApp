@@ -21,6 +21,10 @@ import holdingSlice from "./store/holdingSlice";
 import forgotPasswordSlice from "./store/forgotPasswordSlice";
 import themeSlice from "./store/themeSlice";
 import changePasswordSlice from "./store/changePasswordSlice";
+import unblockUserSlice from "./store/unblockUserSlice";
+import addStockToGroupSlice from "./store/addStockToGroupSlice";
+import deleteSymbolFromGroupSlice from "./store/deleteSymbolFromGroupSlice";
+import placeGTTOrderSlice from "./store/placeGTTOrderSlice";
 
 const store = configureStore({
     middleware: (getDefaultMiddleware) => getDefaultMiddleware({
@@ -50,6 +54,10 @@ const store = configureStore({
         forgotPassword: forgotPasswordSlice,
         theme: themeSlice,
         changePassword: changePasswordSlice,
+        unblockUser: unblockUserSlice,
+        addStockToGroup: addStockToGroupSlice,
+        deleteSymbolFromGroup: deleteSymbolFromGroupSlice,
+        placeGttOrder: placeGTTOrderSlice,
     }
 });
 export default store;

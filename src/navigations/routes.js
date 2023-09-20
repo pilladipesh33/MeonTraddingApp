@@ -26,6 +26,8 @@ import Settings from '../screens/settings';
 import {Provider as PaperProvider, MD3DarkTheme as PaperDarkTheme} from 'react-native-paper'
 import ChangeProfileDetails from '../screens/profile/ChangeProfileDetails';
 import OrderNotification from '../screens/settings/OrderNotification';
+import UnblockUser from '../screens/unblockUser';
+import GttOrder from '../screens/gttOrder';
 
 const Stack = createStackNavigator();
 
@@ -78,6 +80,7 @@ export const Routes = () => {
               <Stack.Screen name='Settings' component={Settings} />
               <Stack.Screen name='ChangeProfileDetails' component={ChangeProfileDetails} />
               <Stack.Screen name='OrderNotification' component={OrderNotification} />
+              <Stack.Screen name='GTT' component={GttOrder} />
             </>
           ) : (
             <>
@@ -85,6 +88,7 @@ export const Routes = () => {
               <Stack.Screen name="OTP" component={OTPValidation} />
               <Stack.Screen name="SignUp" component={SignUp} />
               <Stack.Screen name='ForgotPassword' component={ForgotPassword} />
+            <Stack.Screen name='UnblockUser' component={UnblockUser} />
             </>
           )}
         </Stack.Navigator>
