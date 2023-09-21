@@ -12,6 +12,8 @@ import AlertList from '../screens/alert/AlertList';
 import EquityAlert from '../screens/alert/EquityAlert';
 import SecurityAlert from '../screens/alert/SecurityAlert';
 import {useSelector} from 'react-redux';
+import AddFunds from '../screens/funds/AddFunds';
+import WithdrawFunds from '../screens/funds/WithdrawFunds';
 
 const Tab = createMaterialTopTabNavigator();
 
@@ -232,3 +234,11 @@ export function AlertTopBarNavigation() {
   );
 }
 
+export const FundsTabBarNavigation = () => {
+  return (
+  <Tab.Navigator>
+    <Tab.Screen name='AddFunds' component={AddFunds} />
+    <Tab.Screen name='WithdrawFunds' component={WithdrawFunds} />
+  </Tab.Navigator>
+  )
+}

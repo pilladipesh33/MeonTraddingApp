@@ -22,7 +22,8 @@ import {subscriptionInstrumentsItem} from '../../redux/store/subscriptionsInstru
 import {unsubscriptionInstrumentsItem} from '../../redux/store/unsubscriptionsInstrumentSlice';
 import Header from '../../components/Header';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
-import { deleteSymbolItem } from '../../redux/store/deleteSymbolFromGroupSlice';
+import {deleteSymbolItem} from '../../redux/store/deleteSymbolFromGroupSlice';
+import {ActivityIndicator} from 'react-native-paper';
 
 const GroupDetails = ({route, navigation}) => {
   const data = route?.params?.key;
@@ -32,24 +33,15 @@ const GroupDetails = ({route, navigation}) => {
   const [stockData, setStockData] = useState();
   const [isShowData, setIsShowData] = useState('');
   const [isDelete, setIsDelete] = useState(false);
-  const [payload, setPayload] = useState('')
+  const [payload, setPayload] = useState('');
   const mode = useSelector(state => state.theme.mode);
-  //   const [dataList, setDataList] = useState([]);
-  //   const [highValue, setHighValue] = useState('');
-  //DELETE API INTEGRATION
+  const [dataList, setDataList] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
+  //DELETE GROUP API INTEGRATION
   const dispatch = useDispatch();
   const {deletedGroup, deletedGroupStatus} = useSelector(
     state => state.deleteGroup,
   );
-
-  // console.log('sct0,', stockDa
-  // const handleDeleteButton = () => {
-  //   dispatch(deleteGroupItem(data?.groupName));
-  //   if (deletedGroup?.type == 'success') {
-  //     navigation.navigate('Drawer');
-  //   }
-  // };
-  //GROUP DATA API INTEGRATI
   const {groupSymbol, groupSymbolStatus} = useSelector(
     state => state.getGroupSymbol,
   );
@@ -69,20 +61,20 @@ const GroupDetails = ({route, navigation}) => {
   // console.log('instruments', instruments)
 
   useEffect(() => {
-    if (instruments !== undefined) {
+    if (groupData?.instruments !== undefined) {
       dispatch(getInstrumentsDetailsById({instruments, source: 'WEB'}));
       setStockData(instrumentsDetail);
-    } else if (instruments == undefined) {
+    } else if (groupData?.instruments == undefined) {
       updateInstrumentData([]);
     }
-  }, [instruments]);
+  }, [groupData?.instruments]);
 
-  //SOCKET CONNECTIONS
+  //SOCKET CONNECTION
   const {socketData, socketDataStatus, joined} = useSelector(
     state => state.socketConnection,
   );
 
-  // console.log('instruments', instruments)
+  // console.log('instruments', socketData)
 
   useEffect(() => {
     if (joined && instruments) {
@@ -107,38 +99,43 @@ const GroupDetails = ({route, navigation}) => {
     setStockData('');
   };
 
-  useEffect(() => {
-    if (socketData) {
-      // console.log(socketData?.Touchline?.High);
-      setIsShowData({
-        High: socketData?.Touchline?.High,
-        Low: socketData?.Touchline?.Low,
-        ExchangeInstrumentID: socketData?.ExchangeInstrumentID,
-      });
-    }
-  }, [socketData]);
-
   const handleDeleteButton = (exchangeInstrumentID, exchangeSegment) => {
     setIsDelete(!isDelete);
     setPayload({
       groupName: data?.groupName,
       ExchangeInstrumentID: exchangeInstrumentID,
-      ExchangeSegment: exchangeSegment
-    })
+      ExchangeSegment: exchangeSegment,
+    });
   };
 
-  const {deletedSymbol} = useSelector(state => state.deleteSymbolFromGroup)
+  // console.log('socketData', socketData)
+
+  const {deletedSymbol} = useSelector(state => state.deleteSymbolFromGroup);
 
   useEffect(() => {
-    if(payload){
+    if (payload) {
       dispatch(deleteSymbolItem(payload));
-      alert(deletedSymbol?.description)
-      setPayload('')
+      alert(deletedSymbol?.description);
+      setPayload('');
     }
-  },[payload])
+  });
 
-  // console.log('deletedSymbol', payload)
-  // console.log('socketData', stockData?.result)
+  useEffect(() => {
+    if (groupSymbol.result) {
+      setIsLoading(false);
+    }
+  }, [groupSymbol]);
+
+ function handleOpenStock(){
+    dispatch(
+      unsubscriptionInstrumentsItem({
+        instruments,
+        xtsMessageCode: 1502,
+      }),
+    );
+    navigation.navigate('BuySell', {key: stockData?.result})
+  }
+
   return (
     <View
       style={
@@ -168,58 +165,85 @@ const GroupDetails = ({route, navigation}) => {
           <View />
         )}
       </View>
-      <View style={{paddingTop: 10, flex: 1}}>
-        <FlatList
-          contentContainerStyle={{paddingBottom: '10%'}}
-          data={stockData?.result}
-          keyExtractor={item => item?.ExchangeInstrumentID}
-          extraData={isShowData}
-          renderItem={({item}) => (
-            <View>
-              <TouchableOpacity
-                style={styles.dataContainer}
-                onPress={() => navigation.navigate('BuySell', {key: item})}>
-                <View style={styles.columnContainer}>
-                  <Text
-                    style={
-                      mode == 'Light'
-                        ? styles.textContainerDark
-                        : styles.textContainer
-                    }>
-                    {item?.TradingSymbol}
-                  </Text>
-                  <Text
-                    style={
-                      mode == 'Light'
-                        ? styles.textContainer2Dark
-                        : styles.textContainer
-                    }>
-                    {item?.Name}
-                  </Text>
-                </View>
-                {isDelete == true ? (
-                  <TouchableOpacity onPress={() => handleDeleteButton(item.ExchangeInstrumentID, item.ExchangeSegment)}>
-                    <MaterialCommunityIcons
-                      name="delete"
-                      color={Colors.RED}
-                      size={24}
-                    />
-                  </TouchableOpacity>
-                ) : (
-                  <TouchableOpacity style={styles.columnContainer}>
-                    {isShowData?.ExchangeInstrumentID ==
-                      item?.exchangeInstrumentID}
+      {isLoading ? (
+        <View style={styles.loaderContainer}>
+          <ActivityIndicator
+            animating={true}
+            color={mode == 'Light' ? Colors.PURPLE : Colors.BROWN}
+            size={'large'}
+          />
+        </View>
+      ) : (
+        <View style={{paddingTop: 10, flex: 1}}>
+          <FlatList
+            contentContainerStyle={{paddingBottom: '10%'}}
+            data={stockData?.result}
+            keyExtractor={item => item?.ExchangeInstrumentID}
+            extraData={socketData}
+            renderItem={({item}) => (
+              <View>
+                <TouchableOpacity
+                  style={styles.dataContainer}
+                  onPress={ () => handleOpenStock()}>
+                  <View style={styles.columnContainer}>
                     <Text
-                      style={[styles.textContainerDark, {color: Colors.GREEN}]}>
-                      {item?.PriceBand?.High}
+                      style={
+                        mode == 'Light'
+                          ? styles.textContainerDark
+                          : styles.textContainer
+                      }>
+                      {item?.TradingSymbol}
                     </Text>
                     <Text
-                      style={[styles.textContainerDark, {color: Colors.RED}]}>
-                      {item?.PriceBand?.Low}
+                      style={
+                        mode == 'Light'
+                          ? styles.textContainer2Dark
+                          : styles.textContainer
+                      }>
+                      {item?.Name}
                     </Text>
-                  </TouchableOpacity>
-                )}
-                {/* <View style={styles.columnContainer}>
+                  </View>
+                  {isDelete == true ? (
+                    <TouchableOpacity
+                      onPress={() =>
+                        handleDeleteButton(
+                          item.ExchangeInstrumentID,
+                          item.ExchangeSegment,
+                        )
+                      }>
+                      <MaterialCommunityIcons
+                        name="delete"
+                        color={Colors.RED}
+                        size={24}
+                      />
+                    </TouchableOpacity>
+                  ) : (
+                    <TouchableOpacity style={styles.columnContainer}>
+                      {item.ExchangeInstrumentID ==
+                      socketData?.ExchangeInstrumentID ? (
+                        <Text
+                          style={[
+                            styles.textContainerDark,
+                            {color: Colors.GREEN},
+                          ]}>
+                          {socketData?.Touchline?.BidInfo?.Price}
+                        </Text>
+                      ) : (
+                        <Text
+                          style={[
+                            styles.textContainerDark,
+                            {color: Colors.GREEN},
+                          ]}>
+                          {}
+                        </Text>
+                      )}
+                      <Text
+                        style={[styles.textContainerDark, {color: Colors.RED}]}>
+                        {item?.PriceBand?.Low}
+                      </Text>
+                    </TouchableOpacity>
+                  )}
+                  {/* <View style={styles.columnContainer}>
                     {item?.ExchangeInstrumentID ==
                     socketData?.ExchangeInstrumentID ? (
                       <Text
@@ -248,12 +272,13 @@ const GroupDetails = ({route, navigation}) => {
                       </View>
                     )}
                   </View> */}
-              </TouchableOpacity>
-            </View>
-          )}
-          initialNumToRender={10}
-        />
-      </View>
+                </TouchableOpacity>
+              </View>
+            )}
+            initialNumToRender={10}
+          />
+        </View>
+      )}
     </View>
   );
 };
@@ -321,5 +346,15 @@ const styles = StyleSheet.create({
     fontWeight: '600',
     color: '#EDEBF5',
     opacity: 0.6,
+  },
+  loaderContainer: {
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
+    justifyContent: 'center',
+    alignItems: 'center',
+    alignSelf: 'center',
   },
 });

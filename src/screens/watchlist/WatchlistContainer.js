@@ -19,7 +19,7 @@ const WatchlistContainer = ({navigation}) => {
     if (groups?.type == 'success') {
       setGroupList(groups?.result?.groupList);
     }
-  }, [navigation, groups]);
+  }, [groups]);
 
 // console.log('groupList', groupList)
 

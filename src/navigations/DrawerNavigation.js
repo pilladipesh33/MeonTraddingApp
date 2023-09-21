@@ -20,6 +20,7 @@ import FontAwesome from 'react-native-vector-icons/FontAwesome'
 import Settings from '../screens/settings';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
 import SocketData from '../utils/socketData';
+import Funds from '../screens/funds';
 
 const Drawer = createDrawerNavigator();
 
@@ -156,20 +157,20 @@ const DrawerNavigation = () => {
           ),
         }}
       />
-      {/* <Drawer.Screen
-        name="socket"
-        component={SocketData}
+      <Drawer.Screen
+        name="Funds"
+        component={Funds}
         options={{
           headerTitle: '',
           drawerIcon: ({focused}) => (
             <MaterialIcons
-              name="settings"
+              name="attach-money"
               size={25}
               color={focused ? Colors.BLACK : Colors.GREY}
             />
           ),
         }}
-      /> */}
+      />
     </Drawer.Navigator>
     
   );

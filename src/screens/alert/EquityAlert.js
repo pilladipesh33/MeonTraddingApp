@@ -42,7 +42,7 @@ const EquityAlert = () => {
   }
   return (
     <View style={mode == 'Light' ? styles.androidSafeAreaDark : styles.androidSafeArea}>
-      <View style={{marginTop: 40}}>
+      <View style={{}}>
         <SearchBox />
         <View style={styles.dropDownContainer}>
           <Text style={mode == 'Light' ? styles.txtDark : styles.txt}>ALERT IF VALUE IS</Text>

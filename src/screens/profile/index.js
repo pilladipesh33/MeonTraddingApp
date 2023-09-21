@@ -9,11 +9,12 @@ import {useDispatch, useSelector} from 'react-redux';
 import {setAccessToken} from '../../redux/store/validateOTPSlice';
 import { Avatar } from 'react-native-paper';
 import Header from '../../components/Header';
+import { userProfileData } from '../../redux/store/userProfileSlice';
 
 const Profile = ({navigation}) => {
   const [userProfile, setUserProfile] = useState('');
   const dispatch = useDispatch();
-  const {accessToken} = useSelector(state => state.validateOTP)
+  const {userData} = useSelector(state => state.userProfile);
 
   const handleLogout = async () => {
     try {
@@ -26,7 +27,6 @@ const Profile = ({navigation}) => {
     }
   };
 
-  console.log(accessToken);
 
   const fetchUserDetails = async () => {
     const token = await AsyncStorage.getItem('TOKEN');
@@ -53,8 +53,9 @@ const Profile = ({navigation}) => {
   useEffect(() => {
     fetchUserDetails();
   }, []);
+ 
 
-  //console.log('userProfile', userProfile);
+  console.log('userProfile', userProfile);
 
   return (
     <ScrollView style={mode == 'Light' ? styles.androidSafeAreaDark : styles.androidSafeArea}>
