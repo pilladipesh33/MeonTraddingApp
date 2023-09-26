@@ -21,6 +21,8 @@ export const Colors = {
     HIGHLIGHT: '#4184f3',
     BROWN: '#70363B',
     LIGHT_BROWN: '#BF4947',
+    DARK_GREY: '#404040',
+    DARK_BLUE: '#0F52BA'
 }
 
 export const darkColors = {

@@ -15,7 +15,7 @@ import {useSelector} from 'react-redux';
 import AddFunds from '../screens/funds/AddFunds';
 import WithdrawFunds from '../screens/funds/WithdrawFunds';
 
-const Tab = createMaterialTopTabNavigator();
+export const Tab = createMaterialTopTabNavigator();
 
 export function PortfolioTopBarNavigation() {
   return (

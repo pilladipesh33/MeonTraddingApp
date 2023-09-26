@@ -8,7 +8,7 @@ import {TextInput} from 'react-native-paper';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import {Colors} from '../../constants/color';
 
-const AddFunds = () => {
+const AddFunds = ({title}) => {
   const [userProfile, setUserProfile] = useState('');
   const [check4, setCheck4] = useState(false);
   const [isBankDetails, setIsBankDetails] = useState([]);
@@ -56,7 +56,7 @@ const AddFunds = () => {
   return (
     <View style={styles.container}>
       <Text h3 h3Style={styles.heading}>
-        Deposit Funds
+        {title ? title : "Deposit Funds"}
       </Text>
       <View style={styles.nameContainer}>
         <Text h4 h4Style={styles.nameText}>

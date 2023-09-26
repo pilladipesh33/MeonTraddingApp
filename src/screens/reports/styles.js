@@ -12,4 +12,14 @@ export const styles = StyleSheet.create({
         paddingTop: Platform.OS === 'android' ? StatusBar.currentHeight : 0,
         backgroundColor: Colors.DARK,
       },
+      screenContainer: {
+        flex: 1,
+        paddingHorizontal: 15,
+        paddingVertical: 15
+      },
+      inputText: {
+        paddingLeft: 10,
+        fontSize: 16,
+        color: Colors.MATT_BLACK
+      },
 })

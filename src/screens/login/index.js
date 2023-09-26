@@ -37,8 +37,8 @@ const Login = ({navigation, route}) => {
   const handleLogin = () => {
     if (userID && password) {
       setPayload({
-        userID: userID,
         password: password,
+        userID: userID,
       });
     } else {
       alert('Enter details');

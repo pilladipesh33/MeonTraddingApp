@@ -102,7 +102,7 @@ const GroupDetails = ({route, navigation}) => {
   const handleDeleteButton = (exchangeInstrumentID, exchangeSegment) => {
     setIsDelete(!isDelete);
     setPayload({
-      groupName: data?.groupName,
+      groupName: groupName,
       ExchangeInstrumentID: exchangeInstrumentID,
       ExchangeSegment: exchangeSegment,
     });
@@ -126,14 +126,14 @@ const GroupDetails = ({route, navigation}) => {
     }
   }, [groupSymbol]);
 
- function handleOpenStock(){
+  function handleOpenStock(item){
     dispatch(
       unsubscriptionInstrumentsItem({
         instruments,
         xtsMessageCode: 1502,
       }),
     );
-    navigation.navigate('BuySell', {key: stockData?.result})
+    navigation.navigate('BuySell', {key: item})
   }
 
   return (
@@ -184,7 +184,7 @@ const GroupDetails = ({route, navigation}) => {
               <View>
                 <TouchableOpacity
                   style={styles.dataContainer}
-                  onPress={ () => handleOpenStock()}>
+                  onPress={() => handleOpenStock(item)}>
                   <View style={styles.columnContainer}>
                     <Text
                       style={
@@ -243,35 +243,6 @@ const GroupDetails = ({route, navigation}) => {
                       </Text>
                     </TouchableOpacity>
                   )}
-                  {/* <View style={styles.columnContainer}>
-                    {item?.ExchangeInstrumentID ==
-                    socketData?.ExchangeInstrumentID ? (
-                      <Text
-                        style={[styles.textContainer, {color: Colors.GREEN}]}>
-                        {socketData?.Touchline?.High}
-                      </Text>
-                    ) : (
-                      <View>
-                        <Text
-                          style={[styles.textContainer, {color: Colors.GREEN}]}>
-                          {item?.PriceBand?.High}
-                        </Text>
-                      </View>
-                    )}
-                    {item?.ExchangeInstrumentID ==
-                    socketData?.ExchangeInstrumentID ? (
-                      <Text style={[styles.textContainer, {color: Colors.RED}]}>
-                        {socketData?.Touchline?.Low}{' '}
-                      </Text>
-                    ) : (
-                      <View>
-                        <Text
-                          style={[styles.textContainer, {color: Colors.RED}]}>
-                          {item?.PriceBand?.Low}{' '}
-                        </Text>
-                      </View>
-                    )}
-                  </View> */}
                 </TouchableOpacity>
               </View>
             )}

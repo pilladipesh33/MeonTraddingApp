@@ -28,6 +28,8 @@ const BuySellScreen = ({navigation, route}) => {
   const [isLoading, setIsLoading] = useState(true);
   const [instruments, setInstruments] = useState([]);
 
+  console.log('test', items?.ExchangeInstrumentID)
+
   useEffect(() => {
     if (stockDetails) {
       setIsLoading(false);
@@ -36,7 +38,7 @@ const BuySellScreen = ({navigation, route}) => {
 
   const {subscribedData} = useSelector((state) => state.subscriptionInstruments)
 
-  console.log('instruments', socketData)
+  // console.log('instruments', socketData)
   //Socket Connnection
   const dispatch = useDispatch();
   const {socketData, socketDataStatus, joined} = useSelector(

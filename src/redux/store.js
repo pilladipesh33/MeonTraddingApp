@@ -25,6 +25,7 @@ import unblockUserSlice from "./store/unblockUserSlice";
 import addStockToGroupSlice from "./store/addStockToGroupSlice";
 import deleteSymbolFromGroupSlice from "./store/deleteSymbolFromGroupSlice";
 import placeGTTOrderSlice from "./store/placeGTTOrderSlice";
+import getLedgerReportSlice from "./store/getLedgerReportSlice";
 
 const store = configureStore({
     middleware: (getDefaultMiddleware) => getDefaultMiddleware({
@@ -58,6 +59,7 @@ const store = configureStore({
         addStockToGroup: addStockToGroupSlice,
         deleteSymbolFromGroup: deleteSymbolFromGroupSlice,
         placeGttOrder: placeGTTOrderSlice,
+        getLedgerReport: getLedgerReportSlice,
     }
 });
 export default store;

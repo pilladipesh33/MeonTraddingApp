@@ -9,6 +9,7 @@ import {SCREEN_HEIGHT} from '../../constants/dimensions';
 import {addGroup} from '../../redux/store/addGroupSilce';
 import SearchBox from '../../components/SearchBox';
 import WatchlistContainer from './WatchlistContainer';
+import MyTabs from './WatchlistContainer';
 
 const WatchlistDataSection = ({navigation}) => {
   const [visible, setVisible] = React.useState(false);
@@ -54,30 +55,7 @@ const WatchlistDataSection = ({navigation}) => {
             </Text>
             <Feather name="plus" size={20} color={Colors.GREEN} />
           </TouchableOpacity> */}
-          <WatchlistContainer navigation={navigation} />
-          {/* <Modal
-            visible={visible}
-            onDismiss={hideModal}
-            contentContainerStyle={containerStyle} 
-            dismissable={hideModal}
-             >
-            <View>
-              <TextInput
-                label="Enter Group Name"
-                value={groupName}
-                onChangeText={text => setGroupName(text)}
-              />
-              <TouchableOpacity
-                onPress={() => handleAddGroupButton()}
-                style={{
-                  justifyContent: 'center',
-                  alignItems: 'center',
-                  paddingTop: 10,
-                }}>
-                <Text style={styles.buttonText}>Submit</Text>
-              </TouchableOpacity>
-            </View>
-          </Modal> */}
+          <WatchlistContainer navigation={navigation}/>
         </View>
       </View>
     </View>

@@ -4,15 +4,17 @@ import {useDispatch, useSelector} from 'react-redux';
 import {getGroupDetails} from '../../redux/store/getGroupDetailsSlice';
 import {Colors} from '../../constants/color';
 import SelectDropdown from 'react-native-select-dropdown';
-
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
+import GroupDetails from './GroupDetails';
 
 const WatchlistContainer = ({navigation}) => {
   const {groups} = useSelector(state => state.getGroupDetails);
   const [groupList, setGroupList] = useState([]);
+  const [isWatchlist, setIsWatchlist] = useState({});
   const dispatch = useDispatch();
   const [groupName, setGroupName] = useState('');
-  const mode = useSelector((state) => state.theme.mode);
+  const mode = useSelector(state => state.theme.mode);
+  const [index, setIndex] = useState(0);
 
   useEffect(() => {
     dispatch(getGroupDetails());
@@ -21,42 +23,48 @@ const WatchlistContainer = ({navigation}) => {
     }
   }, [groups]);
 
-// console.log('groupList', groupList)
-
   return (
-    <FlatList
-      contentContainerStyle={{paddingBottom: '15%'}}
-      data={groupList}
-      keyExtractor={item => item?.groupName}
-      renderItem={({item}) => (
-        <View style={{}}>
-          <TouchableOpacity
-            style={styles.container}
-            onPress={() => navigation.navigate('GroupDetail', {key: item})}>
-            <View
-              style={{flexDirection: 'row', justifyContent: 'space-between'}}>
+    <View>
+      <FlatList
+        contentContainerStyle={{paddingBottom: '15%'}}
+        data={groupList}
+        keyExtractor={item => item?.groupName}
+        renderItem={({item}) => (
+          <View style={{}}>
+            <TouchableOpacity
+              style={styles.container}
+              onPress={() => navigation.navigate('GroupDetail', {key: item})}>
               <View
-                style={[styles.containerReverse, {alignItems: 'flex-start'}]}>
-                <Text style={mode == 'Light' ? styles.headingTextDark : styles.headingText}>{item?.groupName}</Text>
-                <Text style={styles.subContentText}>
-                  {item?.exchangeSegment}
-                </Text>
+                style={{flexDirection: 'row', justifyContent: 'space-between'}}>
+                <View
+                  style={[styles.containerReverse, {alignItems: 'flex-start'}]}>
+                  <Text
+                    style={
+                      mode == 'Light'
+                        ? styles.headingTextDark
+                        : styles.headingText
+                    }>
+                    {item?.groupName}
+                  </Text>
+                  <Text style={styles.subContentText}>
+                    {item?.exchangeSegment}
+                  </Text>
+                </View>
+                <View style={styles.containerReverse}>
+                  <Text style={[styles.headingText, {color: item.color}]}>
+                    {item.value}
+                  </Text>
+                  <Text style={[styles.subContentText, {color: Colors.BLACK}]}>
+                    {item.increment}
+                  </Text>
+                </View>
               </View>
-              <View style={styles.containerReverse}>
-                <Text style={[styles.headingText, {color: item.color}]}>
-                  {item.value}
-                </Text>
-                <Text style={[styles.subContentText, {color: Colors.BLACK}]}>
-                  {item.increment}
-                </Text>
-              </View>
-            </View>
-          </TouchableOpacity>
-        </View>
-      )}
-      maxToRenderPerBatch={10}
-    />
-    
+            </TouchableOpacity>
+          </View>
+        )}
+        maxToRenderPerBatch={10}
+      />
+    </View>
   );
 };
 

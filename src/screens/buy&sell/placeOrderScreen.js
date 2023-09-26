@@ -19,7 +19,6 @@ const PlaceOrderScreen = ({navigation, route}) => {
   const action = route?.params?.action;
   const item = route?.params?.items;
   const stockDetails = route?.params?.details;
-  //console.log('action', item?.ExchangeInstrumentID);
   const ProductType = ['CNC', 'MIS', 'NRML', 'BO', 'CO'];
   const OrderType = ['LIMIT', 'MARKET', 'SL-L', 'SL-M'];
   const Validity = ['DAY', 'IOC', 'EOS'];
@@ -83,7 +82,7 @@ const PlaceOrderScreen = ({navigation, route}) => {
     if(orderData?.type == 'success'){
       navigation.goBack();
     }
-  },[])
+  },[orderData])
 
   console.log('payload', orderData)
 

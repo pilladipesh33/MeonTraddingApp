@@ -36,8 +36,8 @@ export const Routes = () => {
   const dispatch = useDispatch();
   //const {validateOTPData} = useSelector((state) => state.validateOTP);
   useEffect(() => {
-    getFunction();
-    dispatch(connectToSocket());
+      getFunction();
+      // dispatch(connectToSocket());
   }, []);
   const getFunction = async () => {
     const token = await AsyncStorage.getItem('TOKEN');
@@ -47,7 +47,7 @@ export const Routes = () => {
     state => state.validateOTP,
   );
   // console.log('accessToken', storageToken);
-  // console.log('validateOTPData', validateOTPData);
+  // console.log('validateOTPData', accessToken);
 
   return (
     <View style={{flex: 1}}>

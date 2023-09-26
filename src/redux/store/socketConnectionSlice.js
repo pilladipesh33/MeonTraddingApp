@@ -4,14 +4,12 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export const connectToSocket = () => async (dispatch, getState) => {
   const url = 'https://itrade.investmentwallet.in:10121';
-  const token = await AsyncStorage.getItem("TOKEN");
-  const userID = await AsyncStorage.getItem('USER_ID');
   const socket = io(url, {
     transports: ['websocket'],
     path: '/marketdata/socket.io',
     query: {
-      userID: userID,
-      token: token,
+      userID: await AsyncStorage.getItem('TOKEN'),
+      token: await AsyncStorage.getItem('USER_ID'),
       publishFormat: 'JSON',
       broadcastMode: 'Full',
     },
@@ -42,7 +40,8 @@ export const connectToSocket = () => async (dispatch, getState) => {
   });
 
   socket.on('connect_error', error => {
-    console.log('connect',error);
+    console.log('Error', error instanceof Error);
+    console.log('connect_error',error);
   });
 
   socket.on('position', data => {

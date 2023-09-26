@@ -12,6 +12,9 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 import MarketView from '../screens/marketView';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import {useSelector} from 'react-redux';
+import { color } from '@rneui/base';
+import { Icon } from '@rneui/themed';
+
 
 const Tab = createBottomTabNavigator();
 const BottomTabNavigation = () => {
@@ -26,7 +29,7 @@ const BottomTabNavigation = () => {
           height: SCREEN_HEIGHT - WINDOW_HEIGHT + 10,
         },
         tabBarShowLabel: false,
-        tabBarActiveTintColor: '#4184f3',
+        tabBarActiveTintColor: Colors.HIGHLIGHT,
         tabBarInactiveTintColor: '#ffffff',
       }}
       backBehavior="order">
@@ -42,11 +45,11 @@ const BottomTabNavigation = () => {
                 color={
                   mode
                     ? focused
-                      ? '#4184f3'
-                      : Colors.GREY
+                      ? Colors.DARK_BLUE
+                      : Colors.DARK_GREY
                     : focused
-                    ? Colors.BLUE
-                    : Colors.MATT_BLACK
+                    ? Colors.HIGHLIGHT
+                    : Colors.DARK_GREY
                 }
               />
               <Text
@@ -54,7 +57,7 @@ const BottomTabNavigation = () => {
                   fontSize: 13,
                   fontWeight: '400',
                   lineHeight: 24,
-                  color: focused ? '#4184f3' : Colors.GREY
+                  color: focused ? Colors.DARK_BLUE : Colors.DARK_GREY
                 }}>
                 Watchlist
               </Text>
@@ -63,25 +66,28 @@ const BottomTabNavigation = () => {
         }}
       />
       <Tab.Screen
-        name="Stocks"
+        name="Trade"
         component={MarketView}
         options={{
           tabBarIcon: ({focused}) => (
             <View style={styles.container}>
-              <AntDesign
-                name={'linechart'}
-                size={23}
-                 color={mode
-                 ? focused
-                   ? '#4184f3'
-                   : Colors.GREY
-                 : focused
-                 ? Colors.BLUE
-                 : Colors.MATT_BLACK}
+              <Icon
+              type='foundation'
+                name={'graph-bar'}
+                size={27}
+                 color={
+                  mode
+                  ? focused
+                    ? Colors.DARK_BLUE
+                    : Colors.DARK_GREY
+                  : focused
+                  ? Colors.HIGHLIGHT
+                  : Colors.DARK_GREY
+                 }
               />
               <Text
                 style={{
-                  color: focused ? '#4184f3' : Colors.GREY,
+                  color: focused ? Colors.DARK_BLUE : Colors.DARK_GREY,
                   fontSize: 13,
                   fontWeight: '400',
                   lineHeight: 24,
@@ -103,15 +109,15 @@ const BottomTabNavigation = () => {
                 size={23}
                 color={mode
                   ? focused
-                    ? '#4184f3'
-                    : Colors.GREY
+                    ? Colors.DARK_BLUE
+                    : Colors.DARK_GREY
                   : focused
-                  ? Colors.BLUE
-                  : Colors.MATT_BLACK}
+                  ? Colors.HIGHLIGHT
+                  : Colors.DARK_GREY}
               />
               <Text
                 style={{
-                  color: focused ? '#4184f3' : Colors.GREY,
+                  color: focused ? Colors.DARK_BLUE : Colors.DARK_GREY,
                   fontSize: 13,
                   fontWeight: '400',
                   lineHeight: 24,
@@ -122,30 +128,6 @@ const BottomTabNavigation = () => {
           ),
         }}
       />
-      {/* <Tab.Screen
-        name="Portfolio"
-        component={Portfolio}
-        options={{
-          tabBarIcon: ({focused}) => (
-            <View style={styles.container}>
-              <Feather
-                name={'briefcase'}
-                size={23}
-                color={focused ? Colors.BLUE : Colors.MATT_BLACK}
-              />
-              <Text
-                style={{
-                  color: focused ? Colors.BLUE : Colors.MATT_BLACK,
-                  fontSize: 13,
-                  fontWeight: '400',
-                  lineHeight: 24,
-                }}>
-                Dashboard
-              </Text>
-            </View>
-          ),
-        }}
-      /> */}
       <Tab.Screen
         name="Market"
         component={Market}
@@ -158,15 +140,15 @@ const BottomTabNavigation = () => {
                 size={23}
                 color={mode
                   ? focused
-                    ? '#4184f3'
-                    : Colors.GREY
+                    ? Colors.DARK_BLUE
+                    : Colors.DARK_GREY
                   : focused
-                  ? Colors.BLUE
-                  : Colors.MATT_BLACK}
+                  ? Colors.HIGHLIGHT
+                  : Colors.DARK_GREY}
               />
               <Text
                 style={{
-                  color: focused ? '#4184f3' : Colors.GREY,
+                  color: focused ? Colors.DARK_BLUE : Colors.DARK_GREY,
                   fontSize: 13,
                   fontWeight: '400',
                   lineHeight: 24,
