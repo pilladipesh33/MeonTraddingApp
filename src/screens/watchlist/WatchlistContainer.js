@@ -14,14 +14,22 @@ const WatchlistContainer = ({navigation}) => {
   const dispatch = useDispatch();
   const [groupName, setGroupName] = useState('');
   const mode = useSelector(state => state.theme.mode);
-  const [index, setIndex] = useState(0);
+  const [updated, setUpdated] = useState(false);
 
   useEffect(() => {
     dispatch(getGroupDetails());
+  },[])
+
+  useEffect(() => {
+    dispatch(getGroupDetails());
+    setUpdated(false)
+  }, [updated]);
+
+  useEffect(() => {
     if (groups?.type == 'success') {
       setGroupList(groups?.result?.groupList);
     }
-  }, [groups]);
+  }, [groups])
 
   return (
     <View>

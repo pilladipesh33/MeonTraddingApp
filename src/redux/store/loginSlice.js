@@ -6,9 +6,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 export const loginUser = createAsyncThunk(
     'login/fetch',
     async (data, {rejectWithValue, serializeError, dispatch, navigation}) => {
-        let payload = JSON.stringify(data);
-    
-        console.log(data);
+        let payload = JSON.stringify(data)
         try{
             const response = await axios.post(
                 "https://itrade.investmentwallet.in:10121/enterprise/auth/validateuser",

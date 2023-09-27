@@ -26,6 +26,7 @@ import addStockToGroupSlice from "./store/addStockToGroupSlice";
 import deleteSymbolFromGroupSlice from "./store/deleteSymbolFromGroupSlice";
 import placeGTTOrderSlice from "./store/placeGTTOrderSlice";
 import getLedgerReportSlice from "./store/getLedgerReportSlice";
+import chartSlice from "./store/chartSlice";
 
 const store = configureStore({
     middleware: (getDefaultMiddleware) => getDefaultMiddleware({
@@ -60,6 +61,7 @@ const store = configureStore({
         deleteSymbolFromGroup: deleteSymbolFromGroupSlice,
         placeGttOrder: placeGTTOrderSlice,
         getLedgerReport: getLedgerReportSlice,
+        chart: chartSlice,
     }
 });
 export default store;

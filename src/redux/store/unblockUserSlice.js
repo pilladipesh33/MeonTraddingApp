@@ -20,7 +20,7 @@ export const unblockUserItem = createAsyncThunk(
                   }
             );
             dispatch(setShowAlert(true))
-            console.log('response.data', response.data)
+            console.log('unblock user', response.data)
            return response?.data
         } catch (error) {
             return rejectWithValue(serializeError(error))

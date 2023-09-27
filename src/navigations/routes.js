@@ -1,10 +1,7 @@
 import React, {useState, useEffect} from 'react';
 import {View} from 'react-native';
-import AuthNavigation from './authNavigation';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {useDispatch, useSelector} from 'react-redux';
-import {connectToSocket} from '../redux/store/socketConnectionSlice';
-import StackNavigation from './StackNavigation';
 import {NavigationContainer, DarkTheme} from '@react-navigation/native';
 import DrawerNavigation from './DrawerNavigation';
 import {createStackNavigator} from '@react-navigation/stack';
@@ -23,22 +20,31 @@ import Portfolio from '../screens/portfolio';
 import {Colors} from '../constants/color';
 import ForgotPassword from '../screens/forgotPassword';
 import Settings from '../screens/settings';
-import {Provider as PaperProvider, MD3DarkTheme as PaperDarkTheme} from 'react-native-paper'
+import {ActivityIndicator} from 'react-native-paper';
 import ChangeProfileDetails from '../screens/profile/ChangeProfileDetails';
 import OrderNotification from '../screens/settings/OrderNotification';
 import UnblockUser from '../screens/unblockUser';
 import GttOrder from '../screens/gttOrder';
+import {constantStyles} from '../constants/styling';
+import {connectToSocket} from '../redux/store/socketConnectionSlice';
 
 const Stack = createStackNavigator();
 
 export const Routes = () => {
   const [storageToken, setStorageToken] = useState('');
+  const [isLoading, setIsLoading] = useState(true);
   const dispatch = useDispatch();
   //const {validateOTPData} = useSelector((state) => state.validateOTP);
   useEffect(() => {
-      getFunction();
-      // dispatch(connectToSocket());
+    getFunction();
+    
   }, []);
+  // useEffect(() => {
+  //   if (accessToken || storageToken) {
+  //     dispatch(connectToSocket());
+  //     alert()
+  //   }
+  // }, [accessToken, storageToken]);
   const getFunction = async () => {
     const token = await AsyncStorage.getItem('TOKEN');
     setStorageToken(token);
@@ -52,47 +58,57 @@ export const Routes = () => {
   return (
     <View style={{flex: 1}}>
       <NavigationContainer>
-        {/* <PaperProvider theme={PaperDarkTheme}> */}
         <Stack.Navigator
           screenOptions={{
             headerShown: false,
           }}>
           {accessToken || storageToken ? (
             <>
-              <Stack.Screen name="Drawer" component={DrawerNavigation} />
-              <Stack.Screen name="BottomTab" component={BottomTabNavigation} />
-              <Stack.Screen name="CancelScreen" component={CancelScreen} />
-              <Stack.Screen name="Search" component={Search} />
-              <Stack.Screen name="GroupDetail" component={GroupDetails} />
-              <Stack.Screen name="BuySell" component={BuySellScreen} />
-              <Stack.Screen name="PlaceOrder" component={PlaceOrderScreen} />
-              <Stack.Screen name="Profile" component={Profile} />
-              <Stack.Screen
-                name="Portfolio"
-                component={Portfolio}
-                options={{
-                  headerShown: true,
-                  headerStyle: {
-                    backgroundColor: Colors.TRANSPARENT
-                  }
-                }}
-              />
-              <Stack.Screen name='Settings' component={Settings} />
-              <Stack.Screen name='ChangeProfileDetails' component={ChangeProfileDetails} />
-              <Stack.Screen name='OrderNotification' component={OrderNotification} />
-              <Stack.Screen name='GTT' component={GttOrder} />
-            </>
+                  <Stack.Screen name="Drawer" component={DrawerNavigation} />
+                  <Stack.Screen
+                    name="BottomTab"
+                    component={BottomTabNavigation}
+                  />
+                  <Stack.Screen name="CancelScreen" component={CancelScreen} />
+                  <Stack.Screen name="Search" component={Search} />
+                  <Stack.Screen name="GroupDetail" component={GroupDetails} />
+                  <Stack.Screen name="BuySell" component={BuySellScreen} />
+                  <Stack.Screen
+                    name="PlaceOrder"
+                    component={PlaceOrderScreen}
+                  />
+                  <Stack.Screen name="Profile" component={Profile} />
+                  <Stack.Screen
+                    name="Portfolio"
+                    component={Portfolio}
+                    options={{
+                      headerShown: true,
+                      headerStyle: {
+                        backgroundColor: Colors.TRANSPARENT,
+                      },
+                    }}
+                  />
+                  <Stack.Screen name="Settings" component={Settings} />
+                  <Stack.Screen
+                    name="ChangeProfileDetails"
+                    component={ChangeProfileDetails}
+                  />
+                  <Stack.Screen
+                    name="OrderNotification"
+                    component={OrderNotification}
+                  />
+                  <Stack.Screen name="GTT" component={GttOrder} />
+                </>
           ) : (
             <>
               <Stack.Screen name="Login" component={Login} />
               <Stack.Screen name="OTP" component={OTPValidation} />
               <Stack.Screen name="SignUp" component={SignUp} />
-              <Stack.Screen name='ForgotPassword' component={ForgotPassword} />
-            <Stack.Screen name='UnblockUser' component={UnblockUser} />
+              <Stack.Screen name="ForgotPassword" component={ForgotPassword} />
+              <Stack.Screen name="UnblockUser" component={UnblockUser} />
             </>
           )}
         </Stack.Navigator>
-        {/* </PaperProvider> */}
       </NavigationContainer>
     </View>
   );

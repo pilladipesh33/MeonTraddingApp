@@ -133,6 +133,7 @@ const GroupDetails = ({route, navigation}) => {
         xtsMessageCode: 1502,
       }),
     );
+    console.log('unsub');
     navigation.navigate('BuySell', {key: item})
   }
 
@@ -218,25 +219,14 @@ const GroupDetails = ({route, navigation}) => {
                       />
                     </TouchableOpacity>
                   ) : (
-                    <TouchableOpacity style={styles.columnContainer}>
-                      {item.ExchangeInstrumentID ==
-                      socketData?.ExchangeInstrumentID ? (
+                    <TouchableOpacity style={[styles.columnContainer, {alignItems: 'flex-end'}]}>
                         <Text
                           style={[
                             styles.textContainerDark,
                             {color: Colors.GREEN},
                           ]}>
-                          {socketData?.Touchline?.BidInfo?.Price}
+                        {item?.PriceBand?.High}
                         </Text>
-                      ) : (
-                        <Text
-                          style={[
-                            styles.textContainerDark,
-                            {color: Colors.GREEN},
-                          ]}>
-                          {}
-                        </Text>
-                      )}
                       <Text
                         style={[styles.textContainerDark, {color: Colors.RED}]}>
                         {item?.PriceBand?.Low}

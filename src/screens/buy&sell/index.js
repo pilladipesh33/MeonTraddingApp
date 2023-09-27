@@ -25,7 +25,7 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 const BuySellScreen = ({navigation, route}) => {
   const items = route?.params?.key;
   const [stockDetails, setStockDetails] = useState('');
-  const [isLoading, setIsLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
   const [instruments, setInstruments] = useState([]);
 
   console.log('test', items?.ExchangeInstrumentID)
@@ -38,7 +38,7 @@ const BuySellScreen = ({navigation, route}) => {
 
   const {subscribedData} = useSelector((state) => state.subscriptionInstruments)
 
-  // console.log('instruments', socketData)
+  console.log('instruments', socketData)
   //Socket Connnection
   const dispatch = useDispatch();
   const {socketData, socketDataStatus, joined} = useSelector(
@@ -86,8 +86,10 @@ const BuySellScreen = ({navigation, route}) => {
       }),
     );
     navigation.goBack();
-    // setStockDetails('');
+    setStockDetails('');
   };
+
+  console.log(stockDetails);
 
   return (
     <View
@@ -149,7 +151,7 @@ const BuySellScreen = ({navigation, route}) => {
               ₹{' '}
               {stockDetails
                 ? `${stockDetails.Price}`
-                : `${items.ExchangeInstrumentID}`}
+                : `${socketData?.Touchline?.BidInfo?.Price}`}
               {/* ? `${socketData?.Touchline?.BidInfo?.Price}`
                ? `${isPrice}`
                : `${items?.PriceBand?.Low}`} */}

@@ -16,6 +16,7 @@ import {Colors} from '../../constants/color';
 import {styles} from './styles';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { addStockToGroupItem } from '../../redux/store/addStockToGroupSlice';
+import { ToastAndroid } from 'react-native';
 
 const Search = ({navigation}) => {
   const {stockData, stockStatus} = useSelector(state => state.searchStockData);
@@ -25,6 +26,7 @@ const Search = ({navigation}) => {
   const [timer, setTimer] = useState(null);
   const [payload, setPayload] = useState('');
   const modes = useSelector(state => state.theme.mode);
+  const [alertShown, setAlertShown] = useState(false);
 
   useEffect(() => {
     if (searchwatchListData) {
@@ -69,18 +71,26 @@ const Search = ({navigation}) => {
   useEffect(() => {
     if(payload){
       dispatch(addStockToGroupItem(payload));
+      setAlertShown(true);
     }
   },[payload])
 
   const {addedStock} = useSelector((state) => state.addStockToGroup);
 
   useEffect(() => {
-    if(addedStock.type == 'success'){
-      alert(addedStock?.description)
+    if(addedStock.type == 'success' && alertShown == true){
+      // alert(addedStock?.description)
+      ToastAndroid.showWithGravityAndOffset(
+        `${addedStock?.description}`,
+        ToastAndroid.SHORT,
+        ToastAndroid.BOTTOM,
+        25,
+        50
+      )
       navigation.goBack();
-    }else {
-      alert(addedStock?.error)
+      setAlertShown(false);
     }
+
   },[addedStock])
 
   //console.log('test1', watchListData);

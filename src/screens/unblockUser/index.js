@@ -3,7 +3,7 @@ import React, {useEffect, useState} from 'react';
 import {styles} from './styles';
 import {useDispatch, useSelector} from 'react-redux';
 import Header from '../../components/Header';
-import {TextInput} from 'react-native-paper';
+import { TextInput} from 'react-native-paper';
 import {unblockUserItem} from '../../redux/store/unblockUserSlice';
 import {Button} from '@rneui/themed';
 
@@ -25,7 +25,6 @@ const UnblockUser = ({navigation}) => {
         dateOfBirth: dob,
         panNo: panID,
       });
-      console.log('payload', payload)
     }
   };
 
